@@ -1,0 +1,106 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+public class ChangeSceneManager : MonoBehaviour
+{
+    public void GotoIntroScene()
+    {
+        StartCoroutine(FadeOut());
+        string sceneName = "IntroScene";
+        StartCoroutine(WaitTime(sceneName));
+    }
+    public void GotoSettingScene()
+    {
+        StartCoroutine(FadeOut());
+        string sceneName = "SettingBrightness";
+        StartCoroutine(WaitTime(sceneName));
+    }
+    public void GotoSceneTest()
+    {
+        StartCoroutine(FadeOut());
+        string sceneName = "TestScene";
+        StartCoroutine(WaitTime(sceneName));
+    }
+    public void GotoUITest()
+    {
+        StartCoroutine(FadeOut());
+        string sceneName = "UI Test";
+        StartCoroutine(WaitTime(sceneName));
+    }
+    public void GotoEnding1()
+    {
+        StartCoroutine(FadeOut());
+        string sceneName = "Ending1";
+        StartCoroutine(WaitTime(sceneName));
+    }
+    public void GotoEnding2()
+    {
+        StartCoroutine(FadeOut());
+        string sceneName = "Ending2";
+        StartCoroutine(WaitTime(sceneName));
+    }
+    public void GotoEnding3()
+    {
+        StartCoroutine(FadeOut());
+        string sceneName = "Ending3";
+        StartCoroutine(WaitTime(sceneName));
+    }
+    public void GotoMain()
+    {
+        StartCoroutine(FadeOut());
+        string sceneName = "MainSelect";
+        StartCoroutine(WaitTime(sceneName));
+    }
+    public void GotoMenu()
+    {
+        StartCoroutine(FadeOut());
+        string sceneName = "MenuScene";
+        StartCoroutine(WaitTime(sceneName));
+    }
+    
+
+
+    public CanvasGroup canvasGroup; // CanvasGroup 컴포넌트를 참조
+    public float fadeDuration = 1.0f; // Fade Out 효과가 지속되는 시간 (초 단위)
+
+    public GameObject loadingScreen;
+
+    private IEnumerator WaitTime(string sceneName)
+    {
+        yield return new WaitForSeconds(1.0f);
+        Resources.UnloadUnusedAssets();
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+        
+    }
+
+    private IEnumerator FadeOut()
+    {
+        if (canvasGroup == null)
+        {
+            Debug.LogError("CanvasGroup is not assigned.");
+            yield break;
+        }
+        float elapsedTime = 0.0f;
+
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            if (canvasGroup.alpha >= 0)
+            {
+                canvasGroup.alpha = Mathf.Clamp01(1.0f - elapsedTime / fadeDuration);
+            }
+            yield return null;
+        }
+
+        canvasGroup.alpha = 0.0f; // 완료 시 완전 투명
+    }
+
+}
