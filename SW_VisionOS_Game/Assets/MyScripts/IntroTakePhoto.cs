@@ -101,6 +101,7 @@ public class IntroTakePhoto : MonoBehaviour
         {
             targetToggle.isOn = !targetToggle.isOn;
         }
+        JY_IntroFilmControl.Flim = 1;
     }
     private IEnumerator ShowNoCaptureMessage()
     {

@@ -11,13 +11,16 @@ using System;
 
 public class TakePhoto : MonoBehaviour
 {
+    public CameraView cameraViewJY;
     public Camera cameraToCapture; // 캡처할 카메라
     public RenderTexture renderTexture; // RenderTexture 템플릿 (필요 시 동적으로 생성)
     public JY_CanvasFlash jyCanvasFlash;
+    public CameraView TakePhotoCameraView;
 
     private bool isProcessing = false; // 스크린샷 처리 중인지 여부를 추적
-    private float cooldownTime = 5.0f; // 촬영 후 대기 시간 (초 단위)
+    private float cooldownTime = 1.0f; // 촬영 후 대기 시간 (초 단위)
     private float lastCaptureTime = 0f; // 마지막 촬영 시간
+    private int visiblePhotoCount = 0;
 
     void OnEnable()
     {
@@ -36,13 +39,19 @@ public class TakePhoto : MonoBehaviour
                 if (touch.phase == TouchPhase.Began)
                 {
                     SpatialPointerState touchData = EnhancedSpatialPointerSupport.GetPointerState(touch);
-                    if (touchData.targetObject != null && touchData.Kind == SpatialPointerKind.Touch)
+
+                    // targetObject가 null이 아닌지 확인
+                    if (touchData.targetObject != null)
                     {
-                        if (CameraText.Flim > 0) // 필름이 남아 있을 때만 스크린샷 촬영
+                        // 터치된 오브젝트의 태그가 "Cube"인지 확인
+                        if (touchData.targetObject.CompareTag("Cube"))
                         {
-                            StartCoroutine(CaptureScreenshot());
+                            if (CameraText.Flim > 0) // 필름이 남아 있을 때만 스크린샷 촬영
+                            {
+                                StartCoroutine(CaptureScreenshot());
+                            }
+                            break;
                         }
-                        break;
                     }
                 }
             }
@@ -54,6 +63,8 @@ public class TakePhoto : MonoBehaviour
         isProcessing = true; // 스크린샷 처리 시작
 
         jyCanvasFlash.TriggerFlash();
+
+        TakePhotoCameraView.CheckValidEnemiesVisibility();
 
         CameraText.Flim--; // 필름 개수 감소
 
@@ -74,15 +85,25 @@ public class TakePhoto : MonoBehaviour
         cameraToCapture.targetTexture = null;
         RenderTexture.active = null;
 
+        string folderPath;
         // 스크린샷을 파일로 저장
-        string folderPath = Path.Combine(Application.persistentDataPath, "Capture");
-        string fileName = DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png";
-        string filePath = Path.Combine(folderPath, fileName);
+        if (cameraViewJY.isObjectVisibleJY)
+        {
+            folderPath = Path.Combine(Application.persistentDataPath, "Capture");
+            visiblePhotoCount++;
+        }
+        else
+        {
+            folderPath = Path.Combine(Application.persistentDataPath, "noCapture");
+        }
 
         if (!Directory.Exists(folderPath))
         {
             Directory.CreateDirectory(folderPath);
         }
+
+        string fileName = DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png";
+        string filePath = Path.Combine(folderPath, fileName);
 
         byte[] bytes = screenshot.EncodeToPNG();
         File.WriteAllBytes(filePath, bytes);
@@ -95,14 +116,29 @@ public class TakePhoto : MonoBehaviour
 
         if(CameraText.Flim == 0)
         {
-            StartCoroutine(TransitionToEndingScene());
+            if(visiblePhotoCount >= 3)
+            {
+                StartCoroutine(TransitionToEnding2Scene());
+            }
+            else
+            {
+                StartCoroutine(TransitionToEnding1Scene());
+            }
         }
     }
 
-    private IEnumerator TransitionToEndingScene()
+    private IEnumerator TransitionToEnding1Scene()
     {
         yield return new WaitForSeconds(0.2f);
         SceneManager.LoadScene("Ending1");
+
+        CameraText.Flim = 5;
+    }
+
+    private IEnumerator TransitionToEnding2Scene()
+    {
+        yield return new WaitForSeconds(0.2f);
+        SceneManager.LoadScene("Ending2");
 
         CameraText.Flim = 5;
     }

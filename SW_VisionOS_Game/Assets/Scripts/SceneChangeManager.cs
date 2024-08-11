@@ -78,30 +78,26 @@ public class ChangeSceneManager : MonoBehaviour
         {
             yield return null;
         }
-        
     }
 
     private void InitializeFolders()
     {
         string CaptureFolderPath = Path.Combine(Application.persistentDataPath, "Capture");
-        //string ghostCaptureFolderPath = Path.Combine(Application.persistentDataPath, "ghostCapture");
+        string noCaptureFolderPath = Path.Combine(Application.persistentDataPath, "noCapture");
 
-        // noCapture 폴더 초기화
+        // Capture 폴더 초기화
         if (Directory.Exists(CaptureFolderPath))
         {
             Directory.Delete(CaptureFolderPath, true); // 폴더와 그 안의 모든 파일 삭제
         }
         Directory.CreateDirectory(CaptureFolderPath); // 폴더 다시 생성
-        /*
+        
         // ghostCapture 폴더 초기화
-        if (Directory.Exists(ghostCaptureFolderPath))
+        if (Directory.Exists(noCaptureFolderPath))
         {
-            Directory.Delete(ghostCaptureFolderPath, true); // 폴더와 그 안의 모든 파일 삭제
+            Directory.Delete(noCaptureFolderPath, true); // 폴더와 그 안의 모든 파일 삭제
         }
-        Directory.CreateDirectory(ghostCaptureFolderPath); // 폴더 다시 생성
-
-        Debug.Log("Folders noCapture and ghostCapture have been initialized.");
-        */
+        Directory.CreateDirectory(noCaptureFolderPath); // 폴더 다시 생성
     }
 
     private IEnumerator FadeOut()
