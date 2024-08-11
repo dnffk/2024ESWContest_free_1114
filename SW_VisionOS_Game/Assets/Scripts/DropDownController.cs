@@ -32,9 +32,9 @@ public class DropDownController : MonoBehaviour
         PlayerPrefs.SetInt(DROPDOWN_KEY, option);
 
 
-        //ValueManager.Instance.Set_Game_Difficulty(option);
+        ValueManager.Instance.Set_Game_Difficulty(option);
 
-        //Debug.Log("Difficulty : " + ValueManager.Instance.Game_Difficulty);
+        Debug.Log("Difficulty : " + ValueManager.Instance.Game_Difficulty);
     }
 
     // Update is called once per frame

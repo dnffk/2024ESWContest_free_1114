@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -52,18 +53,17 @@ public class ChangeSceneManager : MonoBehaviour
     public void GotoMain()
     {
         StartCoroutine(FadeOut());
-        string sceneName = "MainSelect";
+        string sceneName = "MainGame";
         StartCoroutine(WaitTime(sceneName));
     }
     public void GotoMenu()
     {
         StartCoroutine(FadeOut());
         string sceneName = "MenuScene";
+        InitializeFolders();
         StartCoroutine(WaitTime(sceneName));
     }
     
-
-
     public CanvasGroup canvasGroup; // CanvasGroup 컴포넌트를 참조
     public float fadeDuration = 1.0f; // Fade Out 효과가 지속되는 시간 (초 단위)
 
@@ -79,6 +79,29 @@ public class ChangeSceneManager : MonoBehaviour
             yield return null;
         }
         
+    }
+
+    private void InitializeFolders()
+    {
+        string CaptureFolderPath = Path.Combine(Application.persistentDataPath, "Capture");
+        //string ghostCaptureFolderPath = Path.Combine(Application.persistentDataPath, "ghostCapture");
+
+        // noCapture 폴더 초기화
+        if (Directory.Exists(CaptureFolderPath))
+        {
+            Directory.Delete(CaptureFolderPath, true); // 폴더와 그 안의 모든 파일 삭제
+        }
+        Directory.CreateDirectory(CaptureFolderPath); // 폴더 다시 생성
+        /*
+        // ghostCapture 폴더 초기화
+        if (Directory.Exists(ghostCaptureFolderPath))
+        {
+            Directory.Delete(ghostCaptureFolderPath, true); // 폴더와 그 안의 모든 파일 삭제
+        }
+        Directory.CreateDirectory(ghostCaptureFolderPath); // 폴더 다시 생성
+
+        Debug.Log("Folders noCapture and ghostCapture have been initialized.");
+        */
     }
 
     private IEnumerator FadeOut()

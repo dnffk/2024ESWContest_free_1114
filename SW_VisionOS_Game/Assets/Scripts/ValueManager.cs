@@ -53,4 +53,5 @@ public class ValueManager : MonoBehaviour
         Brightness_Value = value;
         Debug.Log("Brightness : " + Brightness_Value);
     }
+    
 }
