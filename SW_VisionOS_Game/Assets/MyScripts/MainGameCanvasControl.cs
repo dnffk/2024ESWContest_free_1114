@@ -9,10 +9,10 @@ public class MainGameCanvasControl : MonoBehaviour
 
     void Start()
     {
-        if (PlayerPrefs.HasKey("CanvasAlpha"))
+        if(PlayerPrefs.HasKey("Brightness"))
         {
-            float alpha = PlayerPrefs.GetFloat("CanvasAlpha")/100f;
-            SetImageAlpha(alpha);
+            float AAAA = PlayerPrefs.GetFloat("Brightness");
+            SetImageAlpha(AAAA);
         }
     }
 

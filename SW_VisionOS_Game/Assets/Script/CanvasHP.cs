@@ -6,8 +6,7 @@ using UnityEngine.UI;
 
 public class CanvasHP : MonoBehaviour
 {
-
-    private Image uiImage; // UI 이미지 컴포넌트
+    public Image uiImage; // UI 이미지 컴포넌트
 
     // Start is called before the first frame update
     void Start()
@@ -29,22 +28,11 @@ public class CanvasHP : MonoBehaviour
     {
         float hp = GhostManager.Instance.HP;
 
-        if(hp <= 0)
-        {
-            Debug.Log("hp is 0");
-            StartCoroutine(TransitionToEnding3Scene());
-        }
-        else if (hp <= 50)
+        if (hp <= 50)
         {
             // 체력이 100일 때는 검정색, 50일 때는 빨간색으로 변하도록 계산
             float redValue = Mathf.Clamp01((50 - hp) / 50); // hp가 줄어들수록 빨간색 비율 증가
             uiImage.color = new Color(redValue, 0, 0, uiImage.color.a); // 기존 알파값 유지
         }
-    }
-
-    private IEnumerator TransitionToEnding3Scene()
-    {
-        yield return new WaitForSeconds(0.2f);
-        SceneManager.LoadScene("Ending3");
     }
 }

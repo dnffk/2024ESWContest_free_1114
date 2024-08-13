@@ -20,7 +20,7 @@ public class GhostManager : MonoBehaviour
     public int maxGhostCount;
     public int maxPoolCount;
     public float delayTime;
-    public float HP;
+    public float HP = 100;
 
     public enum Level
     {
@@ -35,7 +35,6 @@ public class GhostManager : MonoBehaviour
         if (instanace == null)
         {
             instanace = this;
-            DontDestroyOnLoad(instanace);
         }
         else
         {
@@ -45,14 +44,13 @@ public class GhostManager : MonoBehaviour
 
     private void Start()
     {
+        SetDifficultyFromValueManager();
         //arPlaneManager = GetComponent<ARPlaneManager>(); // 플레인 메니저 컴포넌트 가져오기
         arPlaneManager.planesChanged += OnPlaneChanged; // 플레인 변경 이벤트에 핸들러 추가
-        level = Level.Medium;
+        //level = Level.Medium;
         //maxPoolCount = Random.Range(1, maxGhostCount);
         SetMaxPoolCount();
         InitObjectQueue();
-
-        SetDifficultyFromValueManager();
         StartCoroutine(SpawnGhostCor());
     }
 

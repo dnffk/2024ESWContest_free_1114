@@ -39,4 +39,9 @@ public class AudioManager : MonoBehaviour
             Whisper.volume = 0.0f;
         }
     }
+
+    public void StopAudio()
+    {
+        Whisper.Stop();
+    }
 }

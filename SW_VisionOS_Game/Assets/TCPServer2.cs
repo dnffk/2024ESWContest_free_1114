@@ -11,6 +11,10 @@ using System.Diagnostics;
 using Debug = UnityEngine.Debug;
 public class TCPServer2 : MonoBehaviour
 {
+    private NetworkStream stream;
+    private static TCPServer2 instanace = null;
+    public static TCPServer2 Instance
+    { get { return instanace; } }
     private TcpListener server;
     private Thread serverThread;
     private TcpClient connectedTcpClient;
@@ -21,12 +25,25 @@ public class TCPServer2 : MonoBehaviour
     public string ipAddress = "192.168.50.243";
     public int port = 8081;
     private bool isRunning;
-    private string receivedMessage; // 수신된 메시지를 저장할 변수
     private bool messageReceived; // 메시지 수신 플래그
     public GameObject rotateObj;
-    private string x, y, z, w, L_pwr, bShutter, bLight = "0";
+    public string x, y, z, w, L_pwr, bShutter, bLight = "0";
     public float lerpSpeed = 10f;
+    int hitGhost = 0;
     Stopwatch sw = new Stopwatch();
+    private void Awake()
+    {
+        // 싱글톤 패턴 적용
+        if (instanace == null)
+        {
+            instanace = this;
+            DontDestroyOnLoad(instanace);  // 씬이 전환되어도 유지
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
     void Start()
     {
         server = new TcpListener(IPAddress.Any, port);
@@ -35,7 +52,7 @@ public class TCPServer2 : MonoBehaviour
         serverThread = new Thread(new ThreadStart(Run));
         serverThread.IsBackground = true;
         serverThread.Start();
-        Debug.Log("Server started on " + ipAddress + ":" + port);
+        Debug.Log("Server started on " + GetLocalIPAddress() + ":" + port);
     }
     private void Run()
     {
@@ -55,10 +72,18 @@ public class TCPServer2 : MonoBehaviour
             }
         }
     }
+
+    public void chkHitGhost(int value)
+    {
+        Debug.Log("hitghost 호출");
+        hitGhost = value;
+        Debug.Log("hitghost호출 후 값 할당됨");
+    }
+
     private void HandleClient(object obj)
     {
         TcpClient client = (TcpClient)obj;
-        NetworkStream stream = client.GetStream();
+        stream = client.GetStream();
         try
         {
             byte[] buffer = new byte[256]; // 데이터 수신을 위한 버퍼
@@ -78,12 +103,19 @@ public class TCPServer2 : MonoBehaviour
                 else
                 {
                     Parsing(response);
-                    receivedMessage = response;
                     messageReceived = true;
                 }
-                byte[] ack = Encoding.ASCII.GetBytes("ACK");
-                stream.Write(ack, 0, ack.Length);
-                Debug.Log("ACK sent");
+                if (hitGhost != 0)
+                {
+                    string data = "$" + hitGhost + "#\r";
+                    Debug.Log("hit Ghost value  : " + hitGhost);
+                    Send(client, data);
+                    Debug.Log("call send hit Ghost");
+                    hitGhost = 0;
+                }
+                //byte[] ack = Encoding.ASCII.GetBytes("ACK");
+                //stream.Write(ack, 0, ack.Length);
+                //Debug.Log("ACK sent");
                 Debug.Log($"Time : {sw.ElapsedMilliseconds}ms");
                 sw.Reset();
                 sw.Start();
@@ -94,6 +126,7 @@ public class TCPServer2 : MonoBehaviour
             Debug.Log("Exception : " + e.Message);
         }
     }
+
     void Update()
     {
         // 메시지가 수신되었을 경우 메인 스레드에서 UI 업데이트
@@ -114,9 +147,15 @@ public class TCPServer2 : MonoBehaviour
             Light_val.text = "Light Power = " + L_pwr;
         }
         if (bShutter == "1")
-            Chk_shutB.isOn = true;
+        {
+            Debug.Log("셔터 입력 들어;");
+            ValueManager.Instance.Set_Check_shutButton(1);
+        }
         else
-            Chk_shutB.isOn = false;
+        {
+            Debug.Log("셔터 입력 안들어;");
+            ValueManager.Instance.Set_Check_shutButton(0);
+        }
         if (bLight == "1")
             Chk_lightB.isOn = true;
         else
@@ -190,5 +229,35 @@ public class TCPServer2 : MonoBehaviour
         if (server != null) server.Stop();
         if (serverThread != null) serverThread.Abort();
         Debug.Log("Server stopped");
+    }
+    string GetLocalIPAddress()
+    {
+        string localIP = "";
+        foreach (var ip in Dns.GetHostAddresses(Dns.GetHostName()))
+        {
+            if (ip.AddressFamily == AddressFamily.InterNetwork)
+            {
+                localIP = ip.ToString();
+                break;
+            }
+        }
+        return localIP;
+    }
+    public void Send(TcpClient client, string data)
+    {
+        try
+        {
+            Debug.Log("call Send");
+            if (client != null && client.Connected)
+            {
+                byte[] buffer = Encoding.ASCII.GetBytes(data);
+                stream.Write(buffer, 0, buffer.Length);
+                Debug.Log("Data sent to client: " + data);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Failed to send data to client: " + e.Message);
+        }
     }
 }

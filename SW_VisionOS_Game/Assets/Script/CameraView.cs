@@ -6,7 +6,7 @@ public class CameraView : MonoBehaviour
 {
     public bool isObjectVisibleJY = false;
     public Camera viewCamera;
-    public AudioSource Scream;
+    //public AudioSource Scream;
     private string[] validTags = { "Black", "White", "Mask", "Organ" }; // 유효한 태그 목록
     private float verticalMargin = 0.1f; // 뷰포트 상하 가장자리 무시할 비율
     private float horizontalMargin = 0.05f; // 뷰포트 좌우 가장자리 무시할 비율
@@ -18,6 +18,9 @@ public class CameraView : MonoBehaviour
 
     public void CheckValidEnemiesVisibility()
     {
+        Debug.Log("판별 호출 ");
+        isObjectVisibleJY = false;
+
         // 유효한 태그를 가진 오브젝트 탐색 
         foreach (string tag in validTags)
         {
@@ -25,6 +28,10 @@ public class CameraView : MonoBehaviour
 
             foreach (GameObject obj in objects)
             {
+                if(isObjectVisibleJY)
+                {
+                    return;
+                }
                 CheckObjectVisibility(obj);
             }
         }
@@ -93,20 +100,24 @@ public class CameraView : MonoBehaviour
 
             if (navGhost != null)
             {
+                Debug.Log("멈춤 ");
                 navGhost.canMove = false;
             }
 
             if (render != null)
             {
+                Debug.Log("귀신사망 ");
                 render.PlayParticle();
-                Scream.Play();
+                //Scream.Play();
+                Debug.Log("소리 플레이 ");
                 render.StartFadeOut(3f);
+                Debug.Log("귀신 페이드아웃 ");
             }
         }
         else
         {
             isObjectVisibleJY = false;
-            Debug.Log("아무것도안찍");
+            Debug.Log("아무것도안찍힘 ");
             //Debug.Log($"{obj.name} is not visible on the screen (50% 이하 상단, 하단, 좌측 및 우측 절반).");
         }
     }

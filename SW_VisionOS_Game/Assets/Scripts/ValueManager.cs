@@ -28,6 +28,7 @@ public class ValueManager : MonoBehaviour
 
     public int Game_Difficulty;
     public float Brightness_Value;
+    public int Check_shutButton;
 
     private void Awake()
     {
@@ -53,5 +54,10 @@ public class ValueManager : MonoBehaviour
         Brightness_Value = value;
         Debug.Log("Brightness : " + Brightness_Value);
     }
-    
+
+    public void Set_Check_shutButton(int value)
+    {
+        Check_shutButton = value;
+        Debug.Log("ButtonPress : " + Check_shutButton);
+    }
 }

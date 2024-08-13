@@ -5,7 +5,7 @@ using static UnityEngine.GraphicsBuffer;
 public class RenderManager : MonoBehaviour
 {
     public float fadeDuration = 2.0f; // 페이드 아웃 시간
-
+    public AudioSource Scream;
     public GameObject ghostObj;
     public ParticleSystem particle;
     public Renderer[] ghostRenders;
@@ -109,9 +109,15 @@ public class RenderManager : MonoBehaviour
 
     public void PlayParticle()
     {
+        Debug.LogError("Particle 재생 전 호출");
+        if (particle == null)
+        {
+            Debug.LogError("Particle 시스템 할당 안 됨");
+            return;
+        }
         particle.Play(); // 파티클 재생
         Debug.Log("파티클 재생 시작");
-
+        Scream.Play();
         // 지정된 시간 후에 파티클을 정지하는 코루틴 호출
         StartCoroutine(StopParticleAfterDelay(3.5f));
     }

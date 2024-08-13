@@ -31,7 +31,6 @@ public class DropDownController : MonoBehaviour
     {
         PlayerPrefs.SetInt(DROPDOWN_KEY, option);
 
-
         ValueManager.Instance.Set_Game_Difficulty(option);
 
         Debug.Log("Difficulty : " + ValueManager.Instance.Game_Difficulty);
@@ -42,5 +41,4 @@ public class DropDownController : MonoBehaviour
     {
         
     }
-    
 }

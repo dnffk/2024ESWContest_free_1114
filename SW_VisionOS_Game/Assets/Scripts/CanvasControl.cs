@@ -41,5 +41,7 @@ public class CanvasControl : MonoBehaviour
         {
             Debug.LogError("ValueManager instance is null.");
         }
+        float b = slider.value;
+        PlayerPrefs.SetFloat("Brightness", b);
     }
 }

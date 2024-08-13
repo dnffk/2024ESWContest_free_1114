@@ -121,5 +121,4 @@ public class ChangeSceneManager : MonoBehaviour
 
         canvasGroup.alpha = 0.0f; // 완료 시 완전 투명
     }
-
 }

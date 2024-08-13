@@ -1,0 +1,76 @@
+<linker>
+	<assembly fullname="Assembly-CSharp" ignoreIfMissing="1">
+		<type fullname="CanvasControl">
+			<method name="UpdateValue"/>
+		</type>
+		<type fullname="ChangeSceneManager">
+			<method name="GotoIntroScene"/>
+			<method name="GotoMain"/>
+			<method name="GotoMenu"/>
+			<method name="GotoMenu"/>
+			<method name="GotoMenu"/>
+			<method name="GotoMenu"/>
+			<method name="GotoSettingScene"/>
+		</type>
+		<type fullname="JetXR.VisionUI.WindowsStacker">
+			<method name="OpenWindowFromPrefab"/>
+			<method name="OpenWindowFromPrefab"/>
+			<method name="OpenWindowFromPrefab"/>
+			<method name="OpenWindowFromPrefab"/>
+			<method name="OpenWindowFromPrefab"/>
+			<method name="OpenWindowFromPrefab"/>
+			<method name="OpenWindowFromPrefab"/>
+			<method name="OpenWindowFromPrefab"/>
+			<method name="OpenWindowFromPrefab"/>
+			<method name="OpenWindowFromPrefab"/>
+			<method name="OpenWindowFromPrefab"/>
+			<method name="OpenWindowFromPrefab"/>
+			<method name="OpenWindowFromPrefab"/>
+			<method name="OpenWindowFromPrefab"/>
+			<method name="OpenWindowFromPrefab"/>
+			<method name="OpenWindowFromPrefab"/>
+		</type>
+	</assembly>
+	<assembly fullname="Unity.RenderPipelines.Core.Runtime" ignoreIfMissing="1">
+		<type fullname="UnityEngine.Rendering.UI.DebugUIHandlerButton">
+			<method name="OnAction"/>
+		</type>
+		<type fullname="UnityEngine.Rendering.UI.DebugUIHandlerIntField">
+			<method name="OnDecrement"/>
+			<method name="OnDecrement"/>
+			<method name="OnIncrement"/>
+			<method name="OnIncrement"/>
+		</type>
+		<type fullname="UnityEngine.Rendering.UI.DebugUIHandlerObjectPopupField">
+			<method name="OnDecrement"/>
+			<method name="OnIncrement"/>
+		</type>
+		<type fullname="UnityEngine.Rendering.UI.DebugUIHandlerPanel">
+			<method name="OnScrollbarClicked"/>
+			<method name="OnScrollbarClicked"/>
+			<method name="ResetDebugManager"/>
+		</type>
+		<type fullname="UnityEngine.Rendering.UI.DebugUIHandlerUIntField">
+			<method name="OnDecrement"/>
+			<method name="OnDecrement"/>
+			<method name="OnIncrement"/>
+			<method name="OnIncrement"/>
+		</type>
+	</assembly>
+	<assembly fullname="Unity.TextMeshPro" ignoreIfMissing="1">
+		<type fullname="TMPro.TMP_InputField">
+			<method name="set_text"/>
+			<method name="set_text"/>
+			<method name="set_text"/>
+			<method name="set_text"/>
+		</type>
+	</assembly>
+	<assembly fullname="UnityEngine.UI" ignoreIfMissing="1">
+		<type fullname="UnityEngine.UI.Selectable">
+			<method name="Select"/>
+			<method name="Select"/>
+			<method name="Select"/>
+			<method name="Select"/>
+		</type>
+	</assembly>
+</linker>
