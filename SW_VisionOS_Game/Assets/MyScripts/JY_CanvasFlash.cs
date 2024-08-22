@@ -5,7 +5,7 @@ using System.Collections;
 public class JY_CanvasFlash : MonoBehaviour
 {
     public RawImage flashImage;
-    public float flashDuration = 0.5f; // 플래시 효과 지속 시간
+    public float flashDuration = 1.5f; // 플래시 효과 지속 시간
 
     private void Start()
     {

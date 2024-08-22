@@ -6,7 +6,7 @@ public class CameraText : MonoBehaviour
 {
     public TMP_Text dayText;
     public TMP_Text FilmText;
-    public static int Flim = 3;
+    public static int Flim = 100;
 
     void Start()
     {

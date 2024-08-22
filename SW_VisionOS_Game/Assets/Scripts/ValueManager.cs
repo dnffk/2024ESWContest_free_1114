@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-
 public class ValueManager : MonoBehaviour
 {
     private static ValueManager instance;
@@ -25,10 +24,11 @@ public class ValueManager : MonoBehaviour
             return instance;
         }
     }
-
     public int Game_Difficulty;
     public float Brightness_Value;
     public int Check_shutButton;
+    public int Check_lightButton;
+    public float Check_Lpwr;
 
     private void Awake()
     {
@@ -42,22 +42,29 @@ public class ValueManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     public void Set_Game_Difficulty(int value)
     {
         Game_Difficulty = value;
         Debug.Log("Difficulty : " + Game_Difficulty);
     }
-
     public void Set_Brightness_Value(float value)
     {
         Brightness_Value = value;
         Debug.Log("Brightness : " + Brightness_Value);
     }
-
     public void Set_Check_shutButton(int value)
     {
         Check_shutButton = value;
         Debug.Log("ButtonPress : " + Check_shutButton);
+    }
+    public void Set_Check_lightButton(int value)
+    {
+        Check_lightButton = value;
+        Debug.Log("LightButtonPress : " + Check_lightButton);
+    }
+    public void Set_Check_Lpwr(float value)
+    {
+        Check_Lpwr = value;
+        Debug.Log("Lpwr : " + Check_Lpwr);
     }
 }

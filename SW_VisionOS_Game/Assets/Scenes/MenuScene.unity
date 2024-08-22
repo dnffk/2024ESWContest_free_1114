@@ -491,7 +491,8 @@ MonoBehaviour:
   Chk_lightB: {fileID: 0}
   ipAddress: 192.168.50.243
   port: 8081
-  rotateObj: {fileID: 0}
+  rotateObj: {fileID: 5680153648721553924, guid: 38a1577ef7343411a8ff59d6eaf5eef5,
+    type: 3}
   x: 
   y: 
   z: 
@@ -515,6 +516,7 @@ MonoBehaviour:
   Game_Difficulty: 0
   Brightness_Value: 0
   Check_shutButton: 0
+  Check_lightButton: 0
 --- !u!4 &407470263
 Transform:
   m_ObjectHideFlags: 0

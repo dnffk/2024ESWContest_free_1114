@@ -152,7 +152,7 @@ MonoBehaviour:
   _ARPlane: {fileID: 5964132280746587706}
   _PlaneMeshRenderer: {fileID: 4057003144034539598}
   defaultMaterial: {fileID: 0}
-  wallMaterial: {fileID: 2100000, guid: dc458f930193242d4924cfd5c151d9bd, type: 2}
+  wallMaterial: {fileID: 0}
   floorMaterial: {fileID: 0}
   ceilingMaterial: {fileID: 0}
   tableMaterial: {fileID: 0}

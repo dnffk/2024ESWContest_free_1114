@@ -18,6 +18,8 @@ public class IntroTakePhoto : MonoBehaviour
     // 뷰포트의 가장자리를 무시할 마진 설정 (너비와 높이)
     private float verticalMargin = 0.1f;
     private float horizontalMargin = 0.05f;
+    public AudioSource ShutSound;
+
     void OnEnable()
     {
         EnhancedTouchSupport.Enable();
@@ -25,28 +27,19 @@ public class IntroTakePhoto : MonoBehaviour
     void Update()
     {
         if (isProcessing) return; // 이미 스크린샷 처리 중이라면 무시
-        if (Touch.activeTouches.Count > 0)
+        /*if (ValueManager.Instance.Check_shutButton == 1)
         {
-            foreach (var touch in Touch.activeTouches)
+            if (CameraText.Flim > 0) // 필름이 남아 있을 때만 스크린샷 촬영
             {
-                if (touch.phase == TouchPhase.Began)
-                {
-                    SpatialPointerState touchData = EnhancedSpatialPointerSupport.GetPointerState(touch);
-                    if (touchData.targetObject != null && touchData.Kind == SpatialPointerKind.Touch)
-                    {
-                        if (JY_IntroFilmControl.Flim > 0) // 필름이 남아 있을 때만 스크린샷 촬영
-                        {
-                            isTakePhotoQR();
-                        }
-                        break;
-                    }
-                }
+                isTakePhotoQR();
             }
-        }
+        }*/
     }
     private void isTakePhotoQR()
     {
         JYCanvasIntroFlash.TriggerFlash();
+        ShutSound.Play();
+
         if (IsRenderingQRObject())
         {
             JY_IntroFilmControl.Flim--; // 필름 개수 감소

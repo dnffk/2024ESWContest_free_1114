@@ -30,6 +30,8 @@ public class TCPServer2 : MonoBehaviour
     public string x, y, z, w, L_pwr, bShutter, bLight = "0";
     public float lerpSpeed = 10f;
     int hitGhost = 0;
+    int count = 0;
+
     Stopwatch sw = new Stopwatch();
     private void Awake()
     {
@@ -72,14 +74,12 @@ public class TCPServer2 : MonoBehaviour
             }
         }
     }
-
     public void chkHitGhost(int value)
     {
         Debug.Log("hitghost 호출");
         hitGhost = value;
         Debug.Log("hitghost호출 후 값 할당됨");
     }
-
     private void HandleClient(object obj)
     {
         TcpClient client = (TcpClient)obj;
@@ -95,14 +95,25 @@ public class TCPServer2 : MonoBehaviour
                 string response = Encoding.ASCII.GetString(buffer, 0, bytesRead);
                 Debug.Log("Received: " + response); // 수신된 데이터를 디버그 로그로 출력
                                                     // 수신된 메시지와 플래그를 업데이트
-                if (response.Length < 3 || response[0] != '$' || response[response.Length - 1] != '#')
+
+                if (response.Length < 3 || response[0] != '$' || response[response.Length - 2] != '#')
                 {
                     Debug.LogError("Invalid format");
                     messageReceived = false;
                 }
                 else
                 {
-                    Parsing(response);
+                    string[] fields2 = response.Split('\r');
+                    Parsing(fields2[0]);
+
+                    if (fields2.Length > 1)
+                    {
+                        for (int i = 1; i < fields2.Length - 1; i++)
+                        {
+                            Debug.Log("Splited data: " + fields2[i]);
+                            Parsing(fields2[i]);
+                        }
+                    }
                     messageReceived = true;
                 }
                 if (hitGhost != 0)
@@ -126,13 +137,11 @@ public class TCPServer2 : MonoBehaviour
             Debug.Log("Exception : " + e.Message);
         }
     }
-
     void Update()
     {
         // 메시지가 수신되었을 경우 메인 스레드에서 UI 업데이트
         if (messageReceived)
         {
-            UpdateOutputText();
             RotateObject();
             messageReceived = false; // 플래그 초기화
         }
@@ -141,11 +150,14 @@ public class TCPServer2 : MonoBehaviour
     void UpdateOutputText()
     {
         // 수신된 메시지를 UI 텍스트로 업데이트
-        if (Quat_val != null && Light_val != null)
-        {
-            Quat_val.text = "x: " + x + ", y: " + y + "\nz: " + z + ", w: " + w; // 메시지를 UI 텍스트에 설정
-            Light_val.text = "Light Power = " + L_pwr;
-        }
+        //if (Quat_val != null && Light_val != null)
+        //{
+            Debug.Log("Light1 : " + L_pwr);
+            float a = float.Parse(L_pwr);
+            Debug.Log("Light2 : " + L_pwr);
+            ValueManager.Instance.Set_Check_Lpwr(a);
+            Debug.Log("Light3 : " + L_pwr);
+        //}
         if (bShutter == "1")
         {
             Debug.Log("셔터 입력 들어;");
@@ -157,9 +169,20 @@ public class TCPServer2 : MonoBehaviour
             ValueManager.Instance.Set_Check_shutButton(0);
         }
         if (bLight == "1")
-            Chk_lightB.isOn = true;
-        else
-            Chk_lightB.isOn = false;
+        {
+            Debug.Log("손전등 입력 들어옴");
+            ValueManager.Instance.Set_Check_lightButton(1);
+        }
+        else if(bLight == "0")
+        {
+            count++;
+            if(count == 2)
+            {
+                ValueManager.Instance.Set_Check_lightButton(0);
+                count = 0;
+            }
+            Debug.Log("손전등 입력 안 들어옴");
+        }
     }
     private Quaternion quaternion = Quaternion.identity;
     void RotateObject()
@@ -218,6 +241,8 @@ public class TCPServer2 : MonoBehaviour
             Debug.LogError("Not enough Fields" + fields.Length);
             return;
         }
+
+        UpdateOutputText();
     }
     void OnApplicationQuit()
     {
