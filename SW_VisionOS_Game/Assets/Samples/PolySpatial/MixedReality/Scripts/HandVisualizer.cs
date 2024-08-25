@@ -185,6 +185,21 @@ namespace PolySpatial.Samples
                 (updateSuccessFlags & XRHandSubsystem.UpdateSuccessFlags.RightHandJoints) != 0);
         }
 
+        public XRHandSubsystem GetSubsystem()
+        {
+            return m_Subsystem;
+        }
+
+        public Transform GetRightHandTransform()
+        {
+            return m_RightHandGameObjects != null ? m_RightHandGameObjects.GetTransform() : null;
+        }
+
+        public Transform GetLeftHandTransform()
+        {
+            return m_LeftHandGameObjects != null ? m_LeftHandGameObjects.GetTransform() : null;
+        }
+
         class HandGameObjects
         {
             GameObject m_JointVisualsParent;
@@ -333,6 +348,10 @@ namespace PolySpatial.Samples
                     parentPose = pose;
                     parentIndex = jointIndex;
                 }
+            }
+            public Transform GetTransform()
+            {
+                return m_JointVisualsParent.transform;
             }
         }
 #endif

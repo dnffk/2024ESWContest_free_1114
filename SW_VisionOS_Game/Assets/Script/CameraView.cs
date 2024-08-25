@@ -13,7 +13,7 @@ public class CameraView : MonoBehaviour
 
     private void Update()
     {
-        //CheckValidEnemiesVisibility();
+
     }
 
     public void CheckValidEnemiesVisibility()
@@ -95,23 +95,34 @@ public class CameraView : MonoBehaviour
             isObjectVisibleJY = true;
             Debug.Log($"{obj.name} is visible on the screen (50% 이상 상단, 하단, 좌측 또는 우측 절반).");
             //Destroy(obj);
-            RenderManager render = obj.GetComponent<RenderManager>();
-            NavGhost navGhost = obj.GetComponent<NavGhost>();
+            RenderManager render = obj.transform.root.GetComponent<RenderManager>();
+            NavGhost navGhost = obj.transform.root.GetComponent<NavGhost>();
 
-            if (navGhost != null)
+            if (render == null || navGhost == null)
             {
-                Debug.Log("멈춤 ");
+                Debug.Log("반환 실행");
+                GameObject ReturnObj = obj.transform.root.gameObject;
+                GhostManager.Instance.ReturnObjectQueue(ReturnObj);
+                return;
+            }
+            if (navGhost != null && navGhost.isActiveAndEnabled)
+            {
+                Debug.Log("navGhost 컴포넌트 활성화 상태");
                 navGhost.canMove = false;
             }
-
-            if (render != null)
+            else
             {
-                Debug.Log("귀신사망 ");
+                Debug.LogWarning("navGhost 컴포넌트가 null이거나 비활성화 상태입니다.");
+            }
+            if (render != null && render.isActiveAndEnabled)
+            {
+                Debug.Log("render 컴포넌트 활성화 상태");
                 render.PlayParticle();
-                //Scream.Play();
-                Debug.Log("소리 플레이 ");
                 render.StartFadeOut(3f);
-                Debug.Log("귀신 페이드아웃 ");
+            }
+            else
+            {
+                Debug.LogWarning("render 컴포넌트가 null이거나 비활성화 상태입니다.");
             }
         }
         else

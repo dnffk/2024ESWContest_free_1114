@@ -16,6 +16,17 @@ public class RenderManager : MonoBehaviour
         ghostRenders = ghostObj.GetComponentsInChildren<Renderer>();
     }
 
+    public void ResetRenderManager()
+    {
+        isFadingOut = false;
+        if (particle != null)
+        {
+            particle.Stop();
+            particle.Clear();
+        }
+        Debug.Log("RenderManager 초기화 완료");
+    }
+
     // 이 함수를 호출하여 페이드 아웃 효과를 시작
     public void StartFadeOut(float del)
     {
@@ -67,9 +78,12 @@ public class RenderManager : MonoBehaviour
         //yield return new WaitUntil(() => particle.isPlaying == false);
 
         GameObject returnGhost = ghostObj.transform.root.gameObject;
+        particle.Clear();
         GhostManager.Instance.ReturnObjectQueue(returnGhost);
 
+        Debug.Log("isFadingOut : " + isFadingOut);
         isFadingOut = false;
+        Debug.Log("isFadingOut : " + isFadingOut);
     }
 
     private IEnumerator FadeInCoroutine()

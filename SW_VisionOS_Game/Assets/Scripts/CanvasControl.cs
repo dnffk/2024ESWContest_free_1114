@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Mathematics;
+using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,9 +18,51 @@ public class CanvasControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        XROrigin xrOrigin = FindObjectOfType<XROrigin>();
+        if (xrOrigin != null)
+        {
+            cameraTransform = xrOrigin.Camera.transform; // XROrigin의 카메라를 참조
+        }
+        else
+        {
+            Debug.LogWarning("XROrigin을 찾을 수 없습니다.");
+        }
     }
 
+    void PositionUI()
+    {
+        transform.position = cameraTransform.position + cameraTransform.forward * distanceFromCamera;
+        transform.rotation = Quaternion.LookRotation(transform.position - cameraTransform.position);
+    }
+
+    /*
+    void OnEnable()
+    {
+        // 현재 씬에서 활성화된 XROrigin을 찾습니다.
+        XROrigin xrOrigin = FindObjectOfType<XROrigin>();
+        if (xrOrigin != null)
+        {
+            cameraTransform = xrOrigin.Camera.transform; // XROrigin의 카메라를 참조
+        }
+        else
+        {
+            Debug.LogWarning("XROrigin을 찾을 수 없습니다.");
+        }
+    }
+
+    void OnEnable()
+    {
+        XROrigin[] xrOrigins = FindObjectsOfType<XROrigin>();
+        // 중복된 XROrigin이 있으면 이전 것을 파괴
+        foreach (var xrOrigin in xrOrigins)
+        {
+            if (xrOrigin != this)
+            {
+                Destroy(xrOrigin.gameObject);
+            }
+        }
+    }
+    */
     // Update is called once per frame
     void Update()
     {
@@ -35,10 +78,9 @@ public class CanvasControl : MonoBehaviour
         else
         {
             slider.value = 0.5f; // 밝기를 0.5로 설정
-        }*/
-
-        transform.position = cameraTransform.position + cameraTransform.forward * distanceFromCamera;
-        transform.rotation = Quaternion.LookRotation(transform.position - cameraTransform.position);
+        }
+        */
+        PositionUI();
         canvas.alpha = slider.value;
         float a = slider.value * 100;
         Brightness.text = a.ToString("0") + "%" ;

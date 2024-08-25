@@ -118,12 +118,11 @@ public class GhostManager : MonoBehaviour
     {
         if (curObjects.Contains(obj) == false)
         {
+            Debug.Log("반환 대상 아님");
             return;
         }
-
         obj.SetActive(false);
         curObjects.Remove(obj);
-
         objectQueue.Enqueue(obj);
     }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
+using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -25,11 +26,23 @@ public class UIMenuManager : MonoBehaviour
     {
         //    menu.transform.LookAt(new Vector3 (head.position.x, menu.transform.position.y, head.position.z));
         //    menu.transform.forward *= 1;
-        menu2.transform.LookAt(new Vector3(head.position.x, menu2.transform.position.y, head.position.z));
-        menu2.transform.forward *= -1;
+        //menu2.transform.LookAt(new Vector3(head.position.x, menu2.transform.position.y, head.position.z));
+        //menu2.transform.forward *= -1;
+        PositionUIEnding();
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        XROrigin xrOrigin = FindObjectOfType<XROrigin>();
+        if (xrOrigin != null)
+        {
+            head = xrOrigin.Camera.transform; // XROrigin의 카메라를 참조
+            //PositionUIEnding();
+        }
+        else
+        {
+            Debug.LogWarning("XROrigin을 찾을 수 없습니다.");
+        }
+
         if (scene.name == "IntroScene")
         {
             Debug.Log("IntroScene Start");
@@ -55,6 +68,12 @@ public class UIMenuManager : MonoBehaviour
     void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void PositionUIEnding()
+    {
+        menu2.transform.LookAt(new Vector3(head.position.x, menu2.transform.position.y, head.position.z));
+        menu2.transform.forward *= -1;
     }
 }
 

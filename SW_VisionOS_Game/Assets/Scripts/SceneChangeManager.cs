@@ -8,6 +8,13 @@ using UnityEngine.UI;
 
 public class ChangeSceneManager : MonoBehaviour
 {
+    private string currentSceneName;
+    
+    private void Start()
+    {
+        currentSceneName = SceneManager.GetActiveScene().name;    
+    }
+
     public void GotoIntroScene()
     {
         StartCoroutine(FadeOut());
@@ -78,6 +85,12 @@ public class ChangeSceneManager : MonoBehaviour
         {
             yield return null;
         }
+        AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(currentSceneName);
+        while (!asyncUnload.isDone)
+        {
+            yield return null;
+        }
+        currentSceneName = sceneName;
     }
 
     private void InitializeFolders()

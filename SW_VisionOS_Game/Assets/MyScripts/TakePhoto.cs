@@ -1,8 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using Unity.PolySpatial.InputDevices;
-using UnityEngine.InputSystem.EnhancedTouch;
-using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.SceneManagement; // SceneManager를 사용하기 위한 네임스페이스 추가
 using System.IO;
 using System;
@@ -20,10 +17,7 @@ public class TakePhoto : MonoBehaviour
     //private bool hasTakenPhoto = false;
     private int visiblePhotoCount = 0;
 
-    void OnEnable()
-    {
-        EnhancedTouchSupport.Enable();
-    }
+    private int previousShutButtonValue = 0;
 
     void Update()
     {
@@ -34,8 +28,9 @@ public class TakePhoto : MonoBehaviour
             return;
         }
 
-        else{
-            if (ValueManager.Instance.Check_shutButton == 1)
+        else
+        {
+            if (!isProcessing && ValueManager.Instance.Check_shutButton == 1 && previousShutButtonValue == 0)
             {
                 Debug.Log("필름이 남아있음 ");
                 if (CameraText.Flim > 0) // 필름이 남아 있을 때만 스크린샷 촬영
@@ -50,8 +45,10 @@ public class TakePhoto : MonoBehaviour
             {
                 //hasTakenPhoto = false; // 버튼이 다시 눌릴 수 있도록 플래그 초기화
             }*/
+
+            previousShutButtonValue = ValueManager.Instance.Check_shutButton;
         }
-        
+
     }
 
     private IEnumerator CaptureScreenshot()
@@ -62,21 +59,21 @@ public class TakePhoto : MonoBehaviour
         ShutSound.Play();
 
         CameraText.Flim--;
-        Debug.Log("wait");
+
         yield return null;
-        Debug.Log("waitend");
+
         renderTexture = new RenderTexture(Screen.width, Screen.height, 24);
         cameraToCapture.targetTexture = renderTexture;
         RenderTexture.active = renderTexture;
         cameraToCapture.Render();
-        Debug.Log("1렌더 ");
+
         Texture2D screenshot = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
         screenshot.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
         screenshot.Apply();
-        Debug.Log("2렌더 ");
+
         cameraToCapture.targetTexture = null;
         RenderTexture.active = null;
-        Debug.Log("3렌 ");
+
         string folderPath;
         if (TakePhotoCameraView.isObjectVisibleJY)
         {
@@ -104,7 +101,7 @@ public class TakePhoto : MonoBehaviour
         File.WriteAllBytes(filePath, bytes);
 
         Destroy(renderTexture);
-        Destroy(screenshot);        
+        Destroy(screenshot);
 
         isProcessing = false;
         Debug.Log("isprocessing false");
@@ -125,19 +122,19 @@ public class TakePhoto : MonoBehaviour
 
     private IEnumerator TransitionToEnding1Scene()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
         SceneManager.LoadScene("Ending1");
 
-        CameraText.Flim = 100;
+        CameraText.Flim = 5;
         AudioManagerStop.StopAudio();
     }
 
     private IEnumerator TransitionToEnding2Scene()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
         SceneManager.LoadScene("Ending2");
 
-        CameraText.Flim = 100;
+        CameraText.Flim = 5;
         AudioManagerStop.StopAudio();
     }
 }

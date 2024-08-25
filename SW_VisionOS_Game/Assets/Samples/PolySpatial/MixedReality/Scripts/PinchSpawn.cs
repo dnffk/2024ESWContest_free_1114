@@ -10,6 +10,12 @@ public class PinchSpawn : MonoBehaviour
     GameObject m_Canvas;
 
     [SerializeField]
+    Transform m_PolySpatialCameraTransform;
+
+    [SerializeField]
+    float m_HandDistanceThreshold = 1.0f; // 손과 HMD 사이의 거리 임계값
+
+    [SerializeField]
     float m_PoseGripThreshold = 0.1f; // 손의 잡는 포즈 거리 임계값
 
     [SerializeField]
@@ -17,8 +23,6 @@ public class PinchSpawn : MonoBehaviour
 
     [SerializeField]
     float m_HandHeightThresholdMax = 1.5f; // 손의 최대 높이 임계값
-
-    public CameraFollowCamera m_CameraFollowScript;
 
 #if UNITY_INCLUDE_XR_HANDS
     XRHandSubsystem m_HandSubsystem;
@@ -66,23 +70,18 @@ public class PinchSpawn : MonoBehaviour
             m_LeftHandPoseDetected = DetectPose(m_LeftIndexTipJoint, m_LeftThumbTipJoint, m_LeftMiddleTipJoint);
         }
 
-        // 양손 모두 그립 포즈를 취하고 있는지 확인
+        // 양손 모두 포즈를 취하고 있는지 확인
         if (m_RightHandPoseDetected && m_LeftHandPoseDetected)
         {
             if (Time.time - m_PoseDetectionTimer >= k_PoseStableDuration)
             {
                 m_Canvas.SetActive(true);
-                m_CameraFollowScript.enabled = true; // 카메라 따라가기를 활성화
-
-                // 각도 값 전달
-                m_CameraFollowScript.SetAngleValue(Time.time - m_PoseDetectionTimer);
             }
         }
         else
         {
             m_Canvas.SetActive(false);
             m_PoseDetectionTimer = Time.time; // 포즈를 감지하지 않으면 타이머 리셋
-            m_CameraFollowScript.enabled = false; // 카메라 따라가기를 비활성화
         }
     }
 
@@ -92,7 +91,6 @@ public class PinchSpawn : MonoBehaviour
         if (xrGeneralSettings == null)
         {
             Debug.LogError("XR general settings not set");
-            return;
         }
 
         var manager = xrGeneralSettings.Manager;
@@ -140,7 +138,7 @@ public class PinchSpawn : MonoBehaviour
 
                 // 손의 높이 확인
                 float handHeight = thumbPose.position.y;
-                float hmdHeight = indexPose.position.y;
+                float hmdHeight = m_PolySpatialCameraTransform.position.y;
                 bool isHandHeightInRange = handHeight > hmdHeight - m_HandHeightThresholdMin && handHeight < hmdHeight + m_HandHeightThresholdMax;
 
                 // 포즈 인식 및 거리 확인

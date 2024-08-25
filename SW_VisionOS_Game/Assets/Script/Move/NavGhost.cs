@@ -53,6 +53,22 @@ public class NavGhost : MonoBehaviour
         animator = GetComponentInChildren<Animator>(); // 애니메이터 컴포넌트 추가
     }
 
+    public void ResetNavGhost()
+    {
+        canMove = false;
+        soundPlayed = false;
+        isInView = false;
+        timeInView = 0f;
+        waitTime = 0f;
+        hasTeleported = false;
+        teleportCount = 0;
+        if (animator != null)
+        {
+            animator.enabled = true;
+        }
+        Debug.Log("NavGhost 초기화 완료");
+    }
+
     private void Update()
     {
         if (canMove)

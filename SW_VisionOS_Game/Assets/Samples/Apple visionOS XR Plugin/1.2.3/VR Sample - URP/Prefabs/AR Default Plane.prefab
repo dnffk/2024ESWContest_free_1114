@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 7023577539042399415}
   - component: {fileID: 6284850081573549530}
   - component: {fileID: 4057003144034539598}
-  - component: {fileID: 4186533289635866605}
   m_Layer: 0
   m_Name: AR Default Plane
   m_TagString: Untagged
@@ -137,25 +136,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4186533289635866605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7216229022119667191}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 379eb514b6460487b9c67a57bbf14785, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _ARPlane: {fileID: 5964132280746587706}
-  _PlaneMeshRenderer: {fileID: 4057003144034539598}
-  defaultMaterial: {fileID: 0}
-  wallMaterial: {fileID: 0}
-  floorMaterial: {fileID: 0}
-  ceilingMaterial: {fileID: 0}
-  tableMaterial: {fileID: 0}
-  seatMaterial: {fileID: 0}
-  doorMaterial: {fileID: 0}
-  windowMaterial: {fileID: 0}

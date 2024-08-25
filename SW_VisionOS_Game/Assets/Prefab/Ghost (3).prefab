@@ -55,7 +55,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeDuration: 2
   Scream: {fileID: 7690112174498253227}
-  ghostObj: {fileID: 5039039717789363889}
+  ghostObj: {fileID: 490487311778745095}
   particle: {fileID: 7718779915295760733}
   ghostRenders: []
 --- !u!114 &4909103027684230798
@@ -571,12 +571,6 @@ PrefabInstance:
 --- !u!4 &5039039717789363884 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2602231374797837623, guid: 855c90c429434444fbe3ca2b5507ab04,
-    type: 3}
-  m_PrefabInstance: {fileID: 7057906189947435931}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5039039717789363889 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2602231374797837610, guid: 855c90c429434444fbe3ca2b5507ab04,
     type: 3}
   m_PrefabInstance: {fileID: 7057906189947435931}
   m_PrefabAsset: {fileID: 0}

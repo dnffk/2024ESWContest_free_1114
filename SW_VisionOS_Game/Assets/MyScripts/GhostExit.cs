@@ -22,5 +22,20 @@ public class GhostExit : MonoBehaviour
             trigger.activeColliders.Remove(collider);
             Debug.Log("비활성화된 오브젝트가 activeColliders에서 제거됨");
         }
+        ResetState();
+    }
+    private void ResetState()
+    {
+        NavGhost navGhost = GetComponent<NavGhost>();
+        if (navGhost != null)
+        {
+            navGhost.canMove = false;
+            navGhost.ResetNavGhost();
+        }
+        RenderManager renderManager = GetComponent<RenderManager>();
+        if (renderManager != null)
+        {
+            renderManager.ResetRenderManager();
+        }
     }
 }

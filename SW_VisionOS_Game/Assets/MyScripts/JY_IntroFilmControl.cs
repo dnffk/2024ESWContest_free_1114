@@ -17,6 +17,6 @@ public class JY_IntroFilmControl : MonoBehaviour
 
     void Update()
     {
-        FilmText.text = Flim.ToString();
+        FilmText.text = Flim.ToString() + "/1";
     }
 }

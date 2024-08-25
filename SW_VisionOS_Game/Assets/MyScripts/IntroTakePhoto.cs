@@ -26,19 +26,38 @@ public class IntroTakePhoto : MonoBehaviour
     }
     void Update()
     {
-        if (isProcessing) return; // 이미 스크린샷 처리 중이라면 무시
-        /*if (ValueManager.Instance.Check_shutButton == 1)
+        Debug.Log("aa는 " + ValueManager.Instance.Check_shutButton);
+
+        if (isProcessing)
         {
-            if (CameraText.Flim > 0) // 필름이 남아 있을 때만 스크린샷 촬영
+            return;
+        }
+
+        else
+        {
+            if (ValueManager.Instance.Check_shutButton == 1)
             {
-                isTakePhotoQR();
+                Debug.Log("필름이 남아있음 ");
+                if (CameraText.Flim > 0) // 필름이 남아 있을 때만 스크린샷 촬영
+                {
+                    StartCoroutine(IsTakePhotoQR());
+                    //hasTakenPhoto = true; // 사진 촬영 후 플래그 설정
+                }
             }
-        }*/
+
+            /*else if (ValueManager.Instance.Check_shutButton == 0)
+            {
+                //hasTakenPhoto = false; // 버튼이 다시 눌릴 수 있도록 플래그 초기화
+            }*/
+        }
+
     }
-    private void isTakePhotoQR()
+    private IEnumerator IsTakePhotoQR()
     {
         JYCanvasIntroFlash.TriggerFlash();
         ShutSound.Play();
+
+        yield return null;
 
         if (IsRenderingQRObject())
         {
