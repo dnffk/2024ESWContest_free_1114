@@ -26,7 +26,7 @@ public class ValueManager : MonoBehaviour
         }
     }
     public int Game_Difficulty;
-    public float Brightness_Value;
+    public float Lightness_Value;
     public int Check_shutButton;
     public int Check_lightButton;
     public float Check_Lpwr;
@@ -52,10 +52,18 @@ public class ValueManager : MonoBehaviour
         Debug.Log("Difficulty : " + Game_Difficulty);
         SaveDebugDataToJson();
     }
-    public void Set_Brightness_Value(float value)
+    public void Set_Lightness_Value(float value)
     {
-        Brightness_Value = value;
-        Debug.Log("Brightness : " + Brightness_Value);
+        Lightness_Value = value;
+        if(value < 1000)
+        {
+            Lightness_Value = 0.5f;
+        }
+        else if(value < 2000)
+        {
+            Lightness_Value = 0.7f;
+        }
+        Debug.Log("Lightness : " + Lightness_Value);
         SaveDebugDataToJson();
     }
     public void Set_Check_shutButton(int value)
@@ -79,7 +87,7 @@ public class ValueManager : MonoBehaviour
 
     private void SaveDebugDataToJson()
     {
-        DebugData data = new DebugData(Game_Difficulty, Brightness_Value, Check_shutButton, Check_lightButton, Check_Lpwr);
+        DebugData data = new DebugData(Game_Difficulty, Lightness_Value, Check_shutButton, Check_lightButton, Check_Lpwr);
         string jsonData = JsonUtility.ToJson(data, true);
         File.WriteAllText(filePath, jsonData);
         Debug.Log("Debug data saved to : " + filePath);
@@ -102,15 +110,15 @@ public class ValueManager : MonoBehaviour
 public class DebugData
 {
     public int Game_Difficulty;
-    public float Brightness_Value;
+    public float Lightness_Value;
     public int Check_shutButton;
     public int Check_lightButton;
     public float Check_Lpwr;
 
-    public DebugData(int Game_Difficulty, float Brightness_Value, int Check_shutButton, int Check_lightButton, float Check_Lpwr)
+    public DebugData(int Game_Difficulty, float Lightness_Value, int Check_shutButton, int Check_lightButton, float Check_Lpwr)
     {
         this.Game_Difficulty = Game_Difficulty;
-        this.Brightness_Value = Brightness_Value;
+        this.Lightness_Value = Lightness_Value;
         this.Check_lightButton = Check_lightButton;
         this.Check_Lpwr = Check_Lpwr;
     }

@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 7023577539042399415}
   - component: {fileID: 6284850081573549530}
   - component: {fileID: 4057003144034539598}
-  m_Layer: 0
+  - component: {fileID: 3164638518310227796}
+  m_Layer: 6
   m_Name: AR Default Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,8 +114,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: def8b3ed48ccb48dfba9bde827e71910, type: 2}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -136,3 +136,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3164638518310227796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7216229022119667191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 379eb514b6460487b9c67a57bbf14785, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ARPlane: {fileID: 5964132280746587706}
+  _PlaneMeshRenderer: {fileID: 4057003144034539598}
+  defaultMaterial: {fileID: 2100000, guid: b96d9286fd1456341997459c5f42b2d8, type: 2}
+  wallMaterial: {fileID: 2100000, guid: e606a67ed20152f4fbff6d41ab5cbfbc, type: 2}
+  floorMaterial: {fileID: 2100000, guid: 014c2657215b19d4fa0a51ecc183ecfc, type: 2}
+  ceilingMaterial: {fileID: 2100000, guid: b218fed69f5a1084dbbdff675452dce9, type: 2}
+  tableMaterial: {fileID: 2100000, guid: b96d9286fd1456341997459c5f42b2d8, type: 2}
+  seatMaterial: {fileID: 2100000, guid: b96d9286fd1456341997459c5f42b2d8, type: 2}
+  doorMaterial: {fileID: 2100000, guid: 014c2657215b19d4fa0a51ecc183ecfc, type: 2}
+  windowMaterial: {fileID: 2100000, guid: b96d9286fd1456341997459c5f42b2d8, type: 2}

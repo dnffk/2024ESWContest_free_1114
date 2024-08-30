@@ -12,7 +12,7 @@ public class ChangeSceneManager : MonoBehaviour
     
     private void Start()
     {
-        currentSceneName = SceneManager.GetActiveScene().name;    
+        currentSceneName = SceneManager.GetActiveScene().name;
     }
 
     public void GotoIntroScene()
@@ -24,7 +24,7 @@ public class ChangeSceneManager : MonoBehaviour
     public void GotoSettingScene()
     {
         StartCoroutine(FadeOut());
-        string sceneName = "SettingBrightness";
+        string sceneName = "SettingLightness";
         StartCoroutine(WaitTime(sceneName));
     }
     public void GotoSceneTest()

@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CanvasHP : MonoBehaviour
@@ -32,5 +34,15 @@ public class CanvasHP : MonoBehaviour
             float redValue = Mathf.Clamp01((50 - hp) / 50); // hp가 줄어들수록 빨간색 비율 증가
             uiImage.color = new Color(redValue, 0, 0, 0.25f); // 알파값은 1로 고정
         }
+        else if(hp == 0)
+        {
+            TransitionToEnding3Scene();
+        }
+    }
+
+    private IEnumerator TransitionToEnding3Scene()
+    {
+        yield return new WaitForSeconds(0.3f);
+        SceneManager.LoadScene("Ending3");
     }
 }

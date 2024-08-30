@@ -43,7 +43,7 @@ public class TCPServer2 : MonoBehaviour
         }
         else
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
     }
     void Start()
@@ -123,6 +123,7 @@ public class TCPServer2 : MonoBehaviour
                     Send(client, data);
                     Debug.Log("call send hit Ghost");
                     hitGhost = 0;
+                    Send(client, "$0#\r" );
                 }
                 //byte[] ack = Encoding.ASCII.GetBytes("ACK");
                 //stream.Write(ack, 0, ack.Length);
@@ -142,6 +143,7 @@ public class TCPServer2 : MonoBehaviour
         // 메시지가 수신되었을 경우 메인 스레드에서 UI 업데이트
         if (messageReceived)
         {
+            UpdateOutputText();
             RotateObject();
             messageReceived = false; // 플래그 초기화
         }
@@ -155,7 +157,7 @@ public class TCPServer2 : MonoBehaviour
             Debug.Log("Light1 : " + L_pwr);
             float a = float.Parse(L_pwr);
             Debug.Log("Light2 : " + L_pwr);
-            ValueManager.Instance.Set_Check_Lpwr(a);
+            ValueManager.Instance.Set_Lightness_Value(a);
             Debug.Log("Light3 : " + L_pwr);
         //}
         if (bShutter == "1")
@@ -227,10 +229,10 @@ public class TCPServer2 : MonoBehaviour
                     L_pwr = fields[i];
                     break;
                 case 5:
-                    bShutter = fields[i];
+                    bLight = fields[i];
                     break;
                 case 6:
-                    bLight = fields[i];
+                    bShutter = fields[i];
                     break;
                 default:
                     break;

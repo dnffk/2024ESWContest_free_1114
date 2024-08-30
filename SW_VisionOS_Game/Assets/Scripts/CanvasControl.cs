@@ -91,14 +91,15 @@ public class CanvasControl : MonoBehaviour
     {
         if (ValueManager.Instance != null)
         {
-            ValueManager.Instance.Set_Brightness_Value((float)Math.Round(slider.value, 2));
-            Debug.Log("Brightness : " + ValueManager.Instance.Brightness_Value);
+            //(float)Math.Round(slider.value, 2)
+            ValueManager.Instance.Set_Lightness_Value(slider.value);
+            Debug.Log("Lightness : " + ValueManager.Instance.Lightness_Value);
         }
         else
         {
             Debug.LogError("ValueManager instance is null.");
         }
-        float saveBrightness = slider.value;
-        PlayerPrefs.SetFloat("Brightness", saveBrightness);
+        float saveLightness = slider.value;
+        PlayerPrefs.SetFloat("Lightness", saveLightness);
     }
 }

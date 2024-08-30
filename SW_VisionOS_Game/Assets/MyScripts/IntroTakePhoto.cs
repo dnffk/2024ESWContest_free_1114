@@ -1,10 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using Unity.PolySpatial.InputDevices;
 using UnityEngine.InputSystem.EnhancedTouch;
-using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
-using TouchPhase = UnityEngine.InputSystem.TouchPhase;
-using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UI;
 using TMPro;
 public class IntroTakePhoto : MonoBehaviour
@@ -20,14 +16,10 @@ public class IntroTakePhoto : MonoBehaviour
     private float horizontalMargin = 0.05f;
     public AudioSource ShutSound;
 
-    void OnEnable()
-    {
-        EnhancedTouchSupport.Enable();
-    }
+    private int previousShutButtonValue = 0;
+
     void Update()
     {
-        Debug.Log("aa는 " + ValueManager.Instance.Check_shutButton);
-
         if (isProcessing)
         {
             return;
@@ -35,7 +27,7 @@ public class IntroTakePhoto : MonoBehaviour
 
         else
         {
-            if (ValueManager.Instance.Check_shutButton == 1)
+            if (!isProcessing && ValueManager.Instance.Check_shutButton == 1 && previousShutButtonValue == 0)
             {
                 Debug.Log("필름이 남아있음 ");
                 if (CameraText.Flim > 0) // 필름이 남아 있을 때만 스크린샷 촬영
@@ -49,11 +41,14 @@ public class IntroTakePhoto : MonoBehaviour
             {
                 //hasTakenPhoto = false; // 버튼이 다시 눌릴 수 있도록 플래그 초기화
             }*/
+
+            previousShutButtonValue = ValueManager.Instance.Check_shutButton;
         }
 
     }
     private IEnumerator IsTakePhotoQR()
     {
+        isProcessing = true;
         JYCanvasIntroFlash.TriggerFlash();
         ShutSound.Play();
 
@@ -67,6 +62,7 @@ public class IntroTakePhoto : MonoBehaviour
         else
         {
             StartCoroutine(ShowNoCaptureMessage());
+            isProcessing = false;
         }
     }
     private bool IsRenderingQRObject()

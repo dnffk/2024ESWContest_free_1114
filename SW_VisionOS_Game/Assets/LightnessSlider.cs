@@ -16,7 +16,7 @@ public class LightnessSlider : MonoBehaviour
     {
         // 씬이 로드될 때마다 오브젝트들의 위치를 플레이어 기준으로 업데이트
         slider = this.GetComponent<Slider>();
-        this.slider.value = ValueManager.Instance.Check_Lpwr;
+        this.slider.value = ValueManager.Instance.Lightness_Value;
     }
     // Update is called once per frame
     void OnDisable()

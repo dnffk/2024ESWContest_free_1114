@@ -455,84 +455,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 382019924}
   m_CullTransparentMesh: 1
---- !u!1 &407470260
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 407470263}
-  - component: {fileID: 407470262}
-  - component: {fileID: 407470261}
-  m_Layer: 0
-  m_Name: TCPServerManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &407470261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 407470260}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 848948c32b0db4bbeac2e35600901f9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Quat_val: {fileID: 0}
-  Light_val: {fileID: 0}
-  Chk_shutB: {fileID: 0}
-  Chk_lightB: {fileID: 0}
-  ipAddress: 192.168.50.243
-  port: 8081
-  rotateObj: {fileID: 3902659132114522344, guid: 9dded8ff6f0004c64ac8d76f010a088d,
-    type: 3}
-  x: 
-  y: 
-  z: 
-  w: 
-  L_pwr: 
-  bShutter: 
-  bLight: 0
-  lerpSpeed: 10
---- !u!114 &407470262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 407470260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d36f2fe18e5a64d2f91ad10c37f657d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Game_Difficulty: 0
-  Brightness_Value: 0
-  Check_shutButton: 0
-  Check_lightButton: 0
-  Check_Lpwr: 0
---- !u!4 &407470263
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 407470260}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.024999999, y: 0.081, z: 2.98}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519613442
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,7 +1144,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 923054635}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.08}
+  m_LocalPosition: {x: 0, y: 0, z: -0.19}
   m_LocalScale: {x: 0.17553928, y: 0.15074433, z: 0.17553928}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1232,7 +1154,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.38000107}
+  m_AnchoredPosition: {x: 0, y: -0.8499985}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &923054637
@@ -2143,18 +2065,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: FadeInEffect, Assembly-CSharp
-        m_MethodName: StartFadeOut
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 1266450920}
         m_TargetAssemblyTypeName: ChangeSceneManager, Assembly-CSharp
         m_MethodName: GotoSettingScene
@@ -2790,7 +2700,6 @@ GameObject:
   - component: {fileID: 1762675576}
   - component: {fileID: 1762675575}
   - component: {fileID: 1762675574}
-  - component: {fileID: 1762675577}
   m_Layer: 0
   m_Name: XR Origin (XR Rig)
   m_TagString: Untagged
@@ -2847,33 +2756,6 @@ Transform:
   - {fileID: 1266450916}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1762675577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1762675573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 848948c32b0db4bbeac2e35600901f9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Quat_val: {fileID: 0}
-  Light_val: {fileID: 0}
-  Chk_shutB: {fileID: 0}
-  Chk_lightB: {fileID: 0}
-  ipAddress: 192.168.50.243
-  port: 8081
-  rotateObj: {fileID: 0}
-  x: 
-  y: 
-  z: 
-  w: 
-  L_pwr: 
-  bShutter: 
-  bLight: 0
-  lerpSpeed: 10
 --- !u!1 &1801816849
 GameObject:
   m_ObjectHideFlags: 0
@@ -3420,7 +3302,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -12.388, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.446}
+  m_AnchoredPosition: {x: 0, y: -1.64}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1943028234
@@ -3539,4 +3421,3 @@ SceneRoots:
   - {fileID: 1762675576}
   - {fileID: 1943028233}
   - {fileID: 1343071643}
-  - {fileID: 407470263}

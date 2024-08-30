@@ -125,7 +125,6 @@ public class TakePhoto : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         SceneManager.LoadScene("Ending1");
 
-        CameraText.Flim = 5;
         AudioManagerStop.StopAudio();
     }
 
@@ -134,7 +133,6 @@ public class TakePhoto : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         SceneManager.LoadScene("Ending2");
 
-        CameraText.Flim = 5;
         AudioManagerStop.StopAudio();
     }
 }

@@ -81,7 +81,7 @@ public class PinchSpawn : MonoBehaviour
         else
         {
             m_Canvas.SetActive(false);
-            m_PoseDetectionTimer = Time.time; // 포즈를 감지하지 않으면 타이머 리셋
+            m_PoseDetectionTimer = 0; // 포즈를 감지하지 않으면 타이머 리셋
         }
     }
 
@@ -136,16 +136,10 @@ public class PinchSpawn : MonoBehaviour
                 float thumbToIndex = Vector3.Distance(thumbPose.position, indexPose.position);
                 float thumbToMiddle = Vector3.Distance(thumbPose.position, middlePose.position);
 
-                // 손의 높이 확인
-                float handHeight = thumbPose.position.y;
-                float hmdHeight = m_PolySpatialCameraTransform.position.y;
-                bool isHandHeightInRange = handHeight > hmdHeight - m_HandHeightThresholdMin && handHeight < hmdHeight + m_HandHeightThresholdMax;
-
                 // 포즈 인식 및 거리 확인
                 bool isPoseInRange = thumbToIndex < m_PoseGripThreshold && thumbToMiddle < m_PoseGripThreshold;
-                bool isHandCloseToHmd = isHandHeightInRange;
 
-                if (isPoseInRange && isHandCloseToHmd)
+                if (isPoseInRange)
                 {
                     if (m_PoseDetectionTimer == 0) // 처음으로 포즈 감지 시작
                     {
@@ -155,7 +149,6 @@ public class PinchSpawn : MonoBehaviour
                 }
             }
         }
-        m_PoseDetectionTimer = 0; // 포즈가 감지되지 않으면 타이머 초기화
         return false;
     }
 #endif

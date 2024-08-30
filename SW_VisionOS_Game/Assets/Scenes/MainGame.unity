@@ -860,8 +860,8 @@ Camera:
   m_GameObject: {fileID: 327469176}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0.019607844}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1165,7 +1165,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &526454996
 Transform:
   m_ObjectHideFlags: 0
@@ -1291,10 +1291,10 @@ MonoBehaviour:
   planes: []
   arPlaneManager: {fileID: 1652833256}
   ghostPrefab:
-  - {fileID: 5417656408364871049, guid: 18d4a217323db441db17fcc3d63a947a, type: 3}
+  - {fileID: 5417656408364871049, guid: 69b210f717efd4cdebb8768ad5756c6f, type: 3}
+  - {fileID: 490487311778745095, guid: 77048bf51f38c48c1985b26d850c1c88, type: 3}
   - {fileID: 2529592449655215270, guid: e248f59738c04403f833b8d0dc5239be, type: 3}
-  - {fileID: 6611971878452838220, guid: 93c43e5860b0b4a0fbc29f70d53058d0, type: 3}
-  - {fileID: 490487311778745095, guid: 12f60d76228564172b76fada5654289c, type: 3}
+  - {fileID: 6611971878452838220, guid: 181d2cf4be58246e9b19cadd965d32d4, type: 3}
   maxGhostCount: 10
   maxPoolCount: 0
   delayTime: 10
@@ -1773,7 +1773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Game_Difficulty: 0
-  Brightness_Value: 0
+  Lightness_Value: 0
   Check_shutButton: 0
   Check_lightButton: 0
   Check_Lpwr: 0
@@ -1851,7 +1851,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1230673885
 Transform:
   m_ObjectHideFlags: 0
@@ -2003,7 +2003,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1274241292}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e64bded67c19642389ab313fd173c9e8, type: 3}
   m_Name: 
@@ -2025,9 +2025,9 @@ MonoBehaviour:
   m_Canvas: {fileID: 213344083235058186}
   m_PolySpatialCameraTransform: {fileID: 124520091}
   m_HandDistanceThreshold: 1
-  m_PoseGripThreshold: 0.1
-  m_HandHeightThresholdMin: 1
-  m_HandHeightThresholdMax: 1.5
+  m_PoseGripThreshold: 0.08
+  m_HandHeightThresholdMin: 1.5
+  m_HandHeightThresholdMax: 2.5
 --- !u!1 &1320113125
 GameObject:
   m_ObjectHideFlags: 0
@@ -2277,6 +2277,7 @@ GameObject:
   - component: {fileID: 1652833257}
   - component: {fileID: 1652833256}
   - component: {fileID: 1652833259}
+  - component: {fileID: 1652833260}
   m_Layer: 0
   m_Name: XR Origin (XR Rig)
   m_TagString: Untagged
@@ -2314,7 +2315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PlanePrefab: {fileID: 7216229022119667191, guid: 8cffb1c1c6f3e4d8d8928db5df91924f,
     type: 3}
-  m_DetectionMode: 1
+  m_DetectionMode: -1
 --- !u!114 &1652833257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2358,6 +2359,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_RaycastPrefab: {fileID: 0}
+--- !u!114 &1652833260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652833254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f2fb2d69838e4504a36e9fa71d503fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arPlaneManager: {fileID: 1652833256}
+  prefab1: {fileID: 7368941764641333664, guid: f6d31498a44564e97917584eccc8b1eb, type: 3}
+  prefab2: {fileID: 5015329124115604851, guid: d41a65679a62b446b8dd02eb64ce7dc8, type: 3}
+  prefab3: {fileID: 8020861256774952805, guid: 942e974c86e10477cb7a32e650298b1b, type: 3}
+  prefab4: {fileID: 4200269864430669192, guid: 42cf4ebc2501843dfa0a83bd861ecfb6, type: 3}
+  prefab5: {fileID: 8430192224098595384, guid: deb381108eb2f4bc1a17cee5c1bf88db, type: 3}
+  bloodPrefab1: {fileID: 951125918404300972, guid: 776faee45d2ea4ca2bb23a2ce6943c83,
+    type: 3}
+  bloodPrefab2: {fileID: 3997126833200832602, guid: 29d98d3a218234a6bb0e565b3e966957,
+    type: 3}
+  bloodPrefab3: {fileID: 8590812157442739447, guid: 4085ef98b649548b286caffc0bc72214,
+    type: 3}
+  bloodPrefab4: {fileID: 3736844663746951083, guid: dbcf117b242e0417d8f11c8fe3649ec8,
+    type: 3}
+  bloodPrefab5: {fileID: 8590812157442739447, guid: bbf8a0df70c5a482ca0466eba6c6be54,
+    type: 3}
+  bloodPrefab6: {fileID: 8590812157442739447, guid: 6bce1dac4678a484ab8dff6a00c5c3f8,
+    type: 3}
 --- !u!1 &1809454450
 GameObject:
   m_ObjectHideFlags: 0
@@ -2570,7 +2601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 761109190}
-  distanceFromCamera: 0.55
+  distanceFromCamera: 0.2
 --- !u!114 &1988120352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2754,12 +2785,12 @@ PrefabInstance:
     - target: {fileID: 1849251440476829531, guid: 9dded8ff6f0004c64ac8d76f010a088d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.0271
       objectReference: {fileID: 0}
     - target: {fileID: 1849251440476829531, guid: 9dded8ff6f0004c64ac8d76f010a088d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.0071
       objectReference: {fileID: 0}
     - target: {fileID: 1849251440476829531, guid: 9dded8ff6f0004c64ac8d76f010a088d,
         type: 3}
@@ -2806,6 +2837,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: camera
       objectReference: {fileID: 0}
+    - target: {fileID: 3902659132114522344, guid: 9dded8ff6f0004c64ac8d76f010a088d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4129303218259854661, guid: 9dded8ff6f0004c64ac8d76f010a088d,
         type: 3}
       propertyPath: AudioManagerStop
@@ -2834,13 +2870,18 @@ PrefabInstance:
     - target: {fileID: 6118503729658812764, guid: 9dded8ff6f0004c64ac8d76f010a088d,
         type: 3}
       propertyPath: distanceFromCamera
-      value: 0.5
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 6478583912225170825, guid: 9dded8ff6f0004c64ac8d76f010a088d,
         type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 761109184}
+    - target: {fileID: 7351800218078123896, guid: 9dded8ff6f0004c64ac8d76f010a088d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7928887486152338696, guid: 9dded8ff6f0004c64ac8d76f010a088d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
