@@ -156,5 +156,5 @@ MonoBehaviour:
   ceilingMaterial: {fileID: 2100000, guid: b218fed69f5a1084dbbdff675452dce9, type: 2}
   tableMaterial: {fileID: 2100000, guid: b96d9286fd1456341997459c5f42b2d8, type: 2}
   seatMaterial: {fileID: 2100000, guid: b96d9286fd1456341997459c5f42b2d8, type: 2}
-  doorMaterial: {fileID: 2100000, guid: 014c2657215b19d4fa0a51ecc183ecfc, type: 2}
+  doorMaterial: {fileID: 2100000, guid: 444edd5cb0dea6d4bb1c5139b5bdc07a, type: 2}
   windowMaterial: {fileID: 2100000, guid: b96d9286fd1456341997459c5f42b2d8, type: 2}

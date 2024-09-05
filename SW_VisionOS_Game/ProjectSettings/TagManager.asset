@@ -11,6 +11,7 @@ TagManager:
   - Black
   - Mask
   - Organ
+  - GameCamera
   layers:
   - Default
   - TransparentFX

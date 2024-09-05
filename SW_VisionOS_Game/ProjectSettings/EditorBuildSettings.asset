@@ -6,28 +6,28 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/VisionOS_HorrorGame_Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/MenuScene.unity
+    path: Assets/VisionOS_HorrorGame_Scenes/MenuScene.unity
     guid: 1bc297a6273c34418bcf22fdab72beaa
   - enabled: 1
-    path: Assets/Scenes/SettingLightness.unity
+    path: Assets/VisionOS_HorrorGame_Scenes/SettingLightness.unity
     guid: fb957e012fad545c894f2fa9fc6cce97
   - enabled: 1
-    path: Assets/Scenes/IntroScene.unity
+    path: Assets/VisionOS_HorrorGame_Scenes/IntroScene.unity
     guid: b4cc965a25df24ebb8af2b5094ea1b32
   - enabled: 1
-    path: Assets/Scenes/MainGame.unity
+    path: Assets/VisionOS_HorrorGame_Scenes/MainGame.unity
     guid: e84417d3865474f5ba9a8fc8aa0fcccb
-  - enabled: 1
-    path: Assets/Scenes/Ending1.unity
+  - enabled: 0
+    path: Assets/VisionOS_HorrorGame_Scenes/Ending1.unity
     guid: 84c7a1139e41a4b33ba39fdab8da4e63
-  - enabled: 1
-    path: Assets/Scenes/Ending2.unity
+  - enabled: 0
+    path: Assets/VisionOS_HorrorGame_Scenes/Ending2.unity
     guid: fc119ad0be1644f0c870eaef7e907c38
-  - enabled: 1
-    path: Assets/Scenes/Ending3.unity
+  - enabled: 0
+    path: Assets/VisionOS_HorrorGame_Scenes/Ending3.unity
     guid: 47ab88a5917d045d4b13956728926d90
   m_configObjects:
     UnityEditor.XR.VisionOS.VisionOSSettings: {fileID: 11400000, guid: ab7ed9fde08d7404585aeef55feda5c3,

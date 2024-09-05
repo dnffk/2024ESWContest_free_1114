@@ -25,8 +25,6 @@
 		<type fullname="JY_CanvasFlash" preserve="nothing"/>
 		<type fullname="JY_ClassificationPlane" preserve="nothing"/>
 		<type fullname="JY_IntroFilmControl" preserve="nothing"/>
-		<type fullname="JY_LoadPhoto" preserve="nothing"/>
-		<type fullname="JY_LoadPhotoEnding1" preserve="nothing"/>
 		<type fullname="LightButtonManager" preserve="nothing"/>
 		<type fullname="LightnessSlider" preserve="nothing"/>
 		<type fullname="LookAtCamera" preserve="nothing"/>
@@ -40,13 +38,13 @@
 		<type fullname="NavGhost" preserve="nothing"/>
 		<type fullname="NewsTab" preserve="nothing"/>
 		<type fullname="ObjectSpawner" preserve="nothing"/>
+		<type fullname="Readme" preserve="nothing"/>
 		<type fullname="RenderManager" preserve="nothing"/>
 		<type fullname="TakePhoto" preserve="nothing"/>
 		<type fullname="TCPServer2" preserve="nothing"/>
 		<type fullname="Trigger" preserve="nothing"/>
 		<type fullname="UIMenuManager" preserve="nothing"/>
 		<type fullname="ValueManager" preserve="nothing"/>
-		<type fullname="XROriginManager" preserve="nothing"/>
 	</assembly>
 	<assembly fullname="PolySpatial.Samples">
 		<type fullname="CameraFollowCamera" preserve="nothing"/>
@@ -111,13 +109,31 @@
 		<type fullname="UnityEngine.Rendering.UI.UIFoldout" preserve="nothing"/>
 	</assembly>
 	<assembly fullname="Unity.RenderPipelines.Universal.Runtime">
+		<type fullname="UnityEngine.Rendering.Universal.Bloom" preserve="nothing"/>
+		<type fullname="UnityEngine.Rendering.Universal.ChannelMixer" preserve="nothing"/>
+		<type fullname="UnityEngine.Rendering.Universal.ChromaticAberration" preserve="nothing"/>
+		<type fullname="UnityEngine.Rendering.Universal.ColorAdjustments" preserve="nothing"/>
+		<type fullname="UnityEngine.Rendering.Universal.ColorCurves" preserve="nothing"/>
+		<type fullname="UnityEngine.Rendering.Universal.ColorLookup" preserve="nothing"/>
+		<type fullname="UnityEngine.Rendering.Universal.DepthOfField" preserve="nothing"/>
+		<type fullname="UnityEngine.Rendering.Universal.FilmGrain" preserve="nothing"/>
+		<type fullname="UnityEngine.Rendering.Universal.LensDistortion" preserve="nothing"/>
+		<type fullname="UnityEngine.Rendering.Universal.LiftGammaGain" preserve="nothing"/>
+		<type fullname="UnityEngine.Rendering.Universal.MotionBlur" preserve="nothing"/>
+		<type fullname="UnityEngine.Rendering.Universal.PaniniProjection" preserve="nothing"/>
 		<type fullname="UnityEngine.Rendering.Universal.PostProcessData" preserve="nothing"/>
 		<type fullname="UnityEngine.Rendering.Universal.ScreenSpaceAmbientOcclusion" preserve="nothing"/>
+		<type fullname="UnityEngine.Rendering.Universal.ShadowsMidtonesHighlights" preserve="nothing"/>
+		<type fullname="UnityEngine.Rendering.Universal.SplitToning" preserve="nothing"/>
+		<type fullname="UnityEngine.Rendering.Universal.Tonemapping" preserve="nothing"/>
 		<type fullname="UnityEngine.Rendering.Universal.UniversalAdditionalCameraData" preserve="nothing"/>
 		<type fullname="UnityEngine.Rendering.Universal.UniversalAdditionalLightData" preserve="nothing"/>
 		<type fullname="UnityEngine.Rendering.Universal.UniversalRendererData" preserve="nothing"/>
 		<type fullname="UnityEngine.Rendering.Universal.UniversalRenderPipelineAsset" preserve="nothing"/>
+		<type fullname="UnityEngine.Rendering.Universal.UniversalRenderPipelineEditorResources" preserve="nothing"/>
 		<type fullname="UnityEngine.Rendering.Universal.UniversalRenderPipelineGlobalSettings" preserve="nothing"/>
+		<type fullname="UnityEngine.Rendering.Universal.Vignette" preserve="nothing"/>
+		<type fullname="UnityEngine.Rendering.Universal.WhiteBalance" preserve="nothing"/>
 		<type fullname="UnityEngine.Rendering.Universal.XRSystemData" preserve="nothing"/>
 	</assembly>
 	<assembly fullname="Unity.TextMeshPro">

@@ -84,7 +84,6 @@ public class CanvasControl : MonoBehaviour
         canvas.alpha = slider.value;
         float a = slider.value * 100;
         Brightness.text = a.ToString("0") + "%" ;
-
     }
     
     public void UpdateValue()

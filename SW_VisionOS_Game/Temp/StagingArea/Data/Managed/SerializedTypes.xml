@@ -1,4 +1,7 @@
 <linker>
+	<assembly fullname="Assembly-CSharp">
+		<type fullname="Readme/Section" preserve="nothing" serialized="true"/>
+	</assembly>
 	<assembly fullname="Unity.InputSystem">
 		<type fullname="UnityEngine.InputSystem.InputAction" preserve="nothing" serialized="true"/>
 		<type fullname="UnityEngine.InputSystem.InputActionMap" preserve="nothing" serialized="true"/>
