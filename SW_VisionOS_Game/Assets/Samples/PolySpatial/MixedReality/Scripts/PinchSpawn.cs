@@ -17,13 +17,13 @@ public class PinchSpawn : MonoBehaviour
 
     [SerializeField]
     float m_PoseGripThreshold = 0.1f; // 손의 잡는 포즈 거리 임계값
-
+    /*
     [SerializeField]
     float m_HandHeightThresholdMin = 1.2f; // 손의 최소 높이 임계값
 
     [SerializeField]
     float m_HandHeightThresholdMax = 1.5f; // 손의 최대 높이 임계값
-
+    */
 #if UNITY_INCLUDE_XR_HANDS
     XRHandSubsystem m_HandSubsystem;
     XRHandJoint m_RightIndexTipJoint;

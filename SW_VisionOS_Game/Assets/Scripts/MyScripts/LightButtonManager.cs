@@ -21,7 +21,7 @@ public class LightButtonManager : MonoBehaviour
         {
             vignette.SetActive(false);
         }
-    }*/
+    }
     private int previousShutButtonValue = 0;
 
     void Update()
@@ -35,5 +35,24 @@ public class LightButtonManager : MonoBehaviour
             vignette.SetActive(false);
         }
         previousShutButtonValue = ValueManager.Instance.Check_lightButton;
+    }*/
+
+    void Start()
+    {
+        Debug.Log("시작");
+        StartCoroutine(ToggleVignetteEffect());
+    }
+
+    private IEnumerator ToggleVignetteEffect()
+    {
+            Debug.Log("비활성");
+            // 10초 동안 비활성화
+            vignette.SetActive(false);
+            yield return new WaitForSeconds(3f);
+
+            // 10초 동안 활성화
+            vignette.SetActive(true);
+            Debug.Log("활성");
+            yield return new WaitForSeconds(3f);
     }
 }

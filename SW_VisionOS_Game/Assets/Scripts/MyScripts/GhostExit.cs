@@ -13,6 +13,22 @@ public class GhostExit : MonoBehaviour
             Debug.LogError("Trigger 스크립트를 메인 카메라에서 찾을 수 없습니다.");
         }
     }
+
+    private void OnEnable()
+    {
+        Animator[] animators = GetComponentsInChildren<Animator>();
+        if (animators.Length > 0)
+        {
+            foreach (var animator in animators)
+            {
+                if (animator != null)
+                {
+                    animator.SetBool("Death", false);
+                }
+            }
+        }
+    }
+
     private void OnDisable()
     {
         if (trigger == null) return;

@@ -90,12 +90,13 @@ public class TCPServer2 : MonoBehaviour
             int bytesRead; // 수신된 바이트 수
             while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) != 0)
             {
+                Debug.Log("Handle Start");
                 // 수신된 데이터를 문자열로 변환
                 sw.Stop();
                 string response = Encoding.ASCII.GetString(buffer, 0, bytesRead);
                 Debug.Log("Received: " + response); // 수신된 데이터를 디버그 로그로 출력
                                                     // 수신된 메시지와 플래그를 업데이트
-
+                Debug.Log("Handle 1");
                 if (response.Length < 3 || response[0] != '$' || response[response.Length - 2] != '#')
                 {
                     Debug.LogError("Invalid format");
@@ -103,8 +104,11 @@ public class TCPServer2 : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log("Handle 2");
                     string[] fields2 = response.Split('\r');
+                    Debug.Log("Handle 3");
                     Parsing(fields2[0]);
+                    Debug.Log("Handle 4");
 
                     if (fields2.Length > 1)
                     {
@@ -114,6 +118,7 @@ public class TCPServer2 : MonoBehaviour
                             Parsing(fields2[i]);
                         }
                     }
+                    Debug.Log("Handle 5");
                     messageReceived = true;
                 }
                 if (hitGhost != 0)
@@ -131,6 +136,12 @@ public class TCPServer2 : MonoBehaviour
                 Debug.Log($"Time : {sw.ElapsedMilliseconds}ms");
                 sw.Reset();
                 sw.Start();
+                if (!client.Connected)
+                {
+                    Debug.Log("Client disconnected. Trying to reconnect...");
+                    Reconnect(client);
+                }
+                Debug.Log("Handle Last");
             }
         }
         catch (Exception e)
@@ -138,8 +149,25 @@ public class TCPServer2 : MonoBehaviour
             Debug.Log("Exception : " + e.Message);
         }
     }
+    private void Reconnect(TcpClient client)
+    {
+        try
+        {
+            client.Close();
+            // 재연결 로직 추가
+            client = new TcpClient(ipAddress, port);
+            stream = client.GetStream();
+            Debug.Log("Reconnected to client");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Reconnection failed: " + e.Message);
+            // 재연결이 실패하면 다시 재연결을 시도하거나 종료 처리
+        }
+    }
     void Update()
     {
+        //UpdateOutputText();
         rotateObj = GameObject.FindWithTag("GameCamera");
         Debug.Log("카메라 회전값 : " + rotateObj.transform.rotation);
         // 메시지가 수신되었을 경우 메인 스레드에서 UI 업데이트
@@ -155,11 +183,10 @@ public class TCPServer2 : MonoBehaviour
         // 수신된 메시지를 UI 텍스트로 업데이트
         //if (Quat_val != null && Light_val != null)
         //{
-            Debug.Log("Light1 : " + L_pwr);
-            float a = float.Parse(L_pwr);
-            Debug.Log("Light2 : " + L_pwr);
-            ValueManager.Instance.Set_Lightness_Value(a);
-            Debug.Log("Light3 : " + L_pwr);
+
+        Debug.Log("Light1 : " + L_pwr);
+        ValueManager.Instance.Set_Lightness_Value(float.Parse(L_pwr));
+        Debug.Log("Light2 : " + L_pwr);
         //}
         if (bShutter == "1")
         {
@@ -169,17 +196,16 @@ public class TCPServer2 : MonoBehaviour
         else
         {
             Debug.Log("셔터 입력 안들어;");
-            ValueManager.Instance.Set_Check_shutButton(0);
         }
         if (bLight == "1")
         {
             Debug.Log("손전등 입력 들어옴");
             ValueManager.Instance.Set_Check_lightButton(1);
         }
-        else if(bLight == "0")
+        else
         {
             count++;
-            if(count == 2)
+            if (count == 2)
             {
                 ValueManager.Instance.Set_Check_lightButton(0);
                 count = 0;
@@ -201,6 +227,7 @@ public class TCPServer2 : MonoBehaviour
             float.TryParse(w, out float wValue))
         {
             quaternion = new Quaternion(xValue, zValue, yValue, wValue);
+            //ValueManager.Instance.CheckCameraRotation(quaternion);
         }
         else
         {

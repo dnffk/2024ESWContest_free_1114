@@ -19,6 +19,8 @@ public class ChangeSceneManager : MonoBehaviour
     {
         StartCoroutine(FadeOut());
         string sceneName = "IntroScene";
+        ValueManager.Instance.ShutterCounter(0);
+        ValueManager.Instance.CompletedShutterCounter(0);
         StartCoroutine(WaitTime(sceneName));
     }
     public void GotoSettingScene()
@@ -81,6 +83,7 @@ public class ChangeSceneManager : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         Resources.UnloadUnusedAssets();
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        ValueManager.Instance.ChangeScene(sceneName, currentSceneName);
         while (!asyncLoad.isDone)
         {
             yield return null;

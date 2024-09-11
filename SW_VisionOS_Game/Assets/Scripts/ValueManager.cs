@@ -4,8 +4,10 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using System.IO;
+using System;
 public class ValueManager : MonoBehaviour
 {
+    private static readonly object fileLock = new object();
     private static ValueManager instance;
     public static ValueManager Instance
     {
@@ -29,7 +31,14 @@ public class ValueManager : MonoBehaviour
     public float Lightness_Value;
     public int Check_shutButton;
     public int Check_lightButton;
-    public float Check_Lpwr;
+    public Vector3 playerTransform;
+    public int endingNum;
+    public string sceneName;
+    public string currentSceneName;
+    public bool serverState;
+    public int shutterCounter;
+    public int completeShutterCounter;
+    public Quaternion cameraRotation;
 
     private string filePath;
 
@@ -78,19 +87,68 @@ public class ValueManager : MonoBehaviour
         Debug.Log("LightButtonPress : " + Check_lightButton);
         SaveDebugDataToJson();
     }
-    public void Set_Check_Lpwr(float value)
+
+    public void SetPlayerTransform(Vector3 value)
     {
-        Check_Lpwr = value;
-        Debug.Log("Lpwr : " + Check_Lpwr);
+        this.playerTransform = value;
+        SaveDebugDataToJson();
+    }
+    public void SetEnding(int value)
+    {
+        this.endingNum = value;
+        SaveDebugDataToJson();
+    }
+    public void ChangeScene(string sceneName, string currentSceneName)
+    {
+        this.sceneName = sceneName;
+        this.currentSceneName = currentSceneName;
+        SaveDebugDataToJson();
+    }
+    public void CheckServerState(bool value)
+    {
+        this.serverState = value;
+        SaveDebugDataToJson();
+    }
+    public void ShutterCounter(int value)
+    {
+        if (value == 1)
+            shutterCounter++;
+        else
+            shutterCounter = 0;
+        SaveDebugDataToJson();
+    }
+    public void CompletedShutterCounter(int value)
+    {
+        if (value == 1)
+            completeShutterCounter++;
+        else
+            completeShutterCounter = 0;
+        SaveDebugDataToJson();
+    }
+    public void CheckCameraRotation(Quaternion value)
+    {
+        this.cameraRotation = value;
         SaveDebugDataToJson();
     }
 
     private void SaveDebugDataToJson()
     {
-        DebugData data = new DebugData(Game_Difficulty, Lightness_Value, Check_shutButton, Check_lightButton, Check_Lpwr);
-        string jsonData = JsonUtility.ToJson(data, true);
-        File.WriteAllText(filePath, jsonData);
-        Debug.Log("Debug data saved to : " + filePath);
+        try
+        {
+            lock(fileLock)
+            {
+                DebugData data = new DebugData(serverState, Game_Difficulty, Lightness_Value, playerTransform, endingNum, sceneName, currentSceneName, shutterCounter, completeShutterCounter, cameraRotation);
+
+                string jsonData = JsonUtility.ToJson(data, true);
+                File.WriteAllText(filePath, jsonData);
+                Debug.Log("Debug data saved to : " + filePath);
+
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log("File write operation failed " + e.Message);
+        }
     }
     public string LoadDebugData()
     {
@@ -104,22 +162,40 @@ public class ValueManager : MonoBehaviour
             return null;
         }
     }
+    void Update()
+    {
+        Vector3 playerPosition = Camera.main.transform.position;
+        SetPlayerTransform(playerPosition);
+    }
 }
+
+
 
 [System.Serializable]
 public class DebugData
 {
+    public bool serverState;
     public int Game_Difficulty;
     public float Lightness_Value;
-    public int Check_shutButton;
-    public int Check_lightButton;
-    public float Check_Lpwr;
+    public Vector3 playerTransform;
+    public Quaternion cameraRotation;
+    public string sceneName;
+    public string currentSceneName;
+    public int shutterCounter;
+    public int completeShutterCounter;
+    public int endingNum;
 
-    public DebugData(int Game_Difficulty, float Lightness_Value, int Check_shutButton, int Check_lightButton, float Check_Lpwr)
+    public DebugData(bool serverState, int Game_Difficulty, float Lightness_Value, Vector3 playerTransform, int endingNum, string sceneName, string currentSceneName, int shutterCounter, int completeShutterCounter, Quaternion cameraRotation)
     {
         this.Game_Difficulty = Game_Difficulty;
         this.Lightness_Value = Lightness_Value;
-        this.Check_lightButton = Check_lightButton;
-        this.Check_Lpwr = Check_Lpwr;
+        this.serverState = serverState;
+        this.playerTransform = playerTransform;
+        this.endingNum = endingNum;
+        this.sceneName = sceneName;
+        this.currentSceneName = currentSceneName;
+        this.shutterCounter = shutterCounter;
+        this.completeShutterCounter = completeShutterCounter;
+        this.cameraRotation = cameraRotation;
     }
 }

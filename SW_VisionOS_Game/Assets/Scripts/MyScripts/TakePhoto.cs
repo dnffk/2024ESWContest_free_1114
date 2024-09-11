@@ -36,6 +36,7 @@ public class TakePhoto : MonoBehaviour
                 if (CameraText.Flim > 0) // 필름이 남아 있을 때만 스크린샷 촬영
                 {
                     Debug.Log("찍었음");
+                    ValueManager.Instance.ShutterCounter(1);
                     TakePhotoCameraView.CheckValidEnemiesVisibility();
                     StartCoroutine(CaptureScreenshot());
                     //hasTakenPhoto = true; // 사진 촬영 후 플래그 설정
@@ -79,6 +80,7 @@ public class TakePhoto : MonoBehaviour
         if (TakePhotoCameraView.isObjectVisibleJY)
         {
             Debug.Log("귀신이 찍혔어요");
+            ValueManager.Instance.CompletedShutterCounter(1);
             folderPath = Path.Combine(Application.persistentDataPath, "Capture");
             visiblePhotoCount++;
         }
@@ -124,6 +126,7 @@ public class TakePhoto : MonoBehaviour
     private IEnumerator TransitionToEnding1Scene()
     {
         yield return new WaitForSeconds(0.3f);
+        ValueManager.Instance.SetEnding(1);
         SceneManager.LoadScene("Ending1");
         CameraText.Flim = 5;
         AudioManagerStop.StopAudio();
@@ -132,6 +135,7 @@ public class TakePhoto : MonoBehaviour
     private IEnumerator TransitionToEnding2Scene()
     {
         yield return new WaitForSeconds(0.3f);
+        ValueManager.Instance.SetEnding(2);
         SceneManager.LoadScene("Ending2");
         CameraText.Flim = 5;
         AudioManagerStop.StopAudio();
