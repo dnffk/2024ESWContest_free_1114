@@ -8,11 +8,11 @@ public class ObjectSpawner : MonoBehaviour
     public ARPlaneManager arPlaneManager; // ARPlaneManager 참조
 
     // Inspector에서 각각 할당할 프리팹들 (기존 오브젝트 최대 5개)
-    public GameObject prefab1;
-    public GameObject prefab2;
-    public GameObject prefab3;
-    public GameObject prefab4;
-    public GameObject prefab5;
+    //public GameObject prefab1;
+    //public GameObject prefab2;
+    //public GameObject prefab3;
+    //public GameObject prefab4;
+    //public GameObject prefab5;
 
     // 핏자국 프리팹들 (최대 8개)
     public GameObject bloodPrefab1;
@@ -25,8 +25,8 @@ public class ObjectSpawner : MonoBehaviour
     private List<ARPlane> planes = new List<ARPlane>(); // 감지된 ARPlane 저장
     private int objectSpawnCount = 0;
     private int bloodSpawnCount = 0;
-    private int maxObjectSpawns = 5;
-    private int maxBloodSpawns = 6;
+    //private int maxObjectSpawns = 5;
+    private int maxBloodSpawns = 10;
 
     private void Start()
     {
@@ -54,14 +54,14 @@ public class ObjectSpawner : MonoBehaviour
     private void TrySpawnAllObjects()
     {
         // 일반 오브젝트 생성
-        if (objectSpawnCount < maxObjectSpawns)
+        /*if (objectSpawnCount < maxObjectSpawns)
         {
             SpawnPrefabObject(prefab1);
             SpawnPrefabObject(prefab2);
             SpawnPrefabObject(prefab3);
             SpawnPrefabObject(prefab4);
             SpawnPrefabObject(prefab5);
-        }
+        }*/
 
         // 핏자국 오브젝트 생성
         if (bloodSpawnCount < maxBloodSpawns)
@@ -75,12 +75,12 @@ public class ObjectSpawner : MonoBehaviour
         }
 
         // 모두 생성된 경우 스크립트 비활성화
-        if (objectSpawnCount >= maxObjectSpawns && bloodSpawnCount >= maxBloodSpawns)
+        if (/*objectSpawnCount >= maxObjectSpawns && */bloodSpawnCount >= maxBloodSpawns)
         {
             enabled = false;
         }
     }
-
+    /*
     private void SpawnPrefabObject(GameObject prefab)
     {
         if (prefab == null || objectSpawnCount >= maxObjectSpawns)
@@ -117,7 +117,7 @@ public class ObjectSpawner : MonoBehaviour
         }
 
         objectSpawnCount++;
-    }
+    }*/
 
     private void SpawnBloodObject(GameObject prefab)
     {

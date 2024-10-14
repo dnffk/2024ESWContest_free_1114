@@ -13,7 +13,10 @@ namespace PolySpatial.Samples
     {
         [SerializeField]
         GameObject m_JointVisualsPrefab;
-
+        /*
+        [SerializeField]
+        GameObject trackedObject;
+        */
 #if UNITY_INCLUDE_XR_HANDS && (UNITY_VISIONOS || UNITY_EDITOR)
         XRHandSubsystem m_Subsystem;
         HandGameObjects m_LeftHandGameObjects;
@@ -74,7 +77,14 @@ namespace PolySpatial.Samples
                 UpdateRenderingVisibility(m_RightHandGameObjects, false);
                 return;
             }
+            /*
+            Vector3 leftHandPosition = m_LeftHandGameObjects?.GetTransform().position ?? Vector3.zero;
+            Vector3 rightHandPosition = m_RightHandGameObjects?.GetTransform().position ?? Vector3.zero;
+            Vector3 middlePosition = (leftHandPosition + rightHandPosition) / 2;
 
+            // 오브젝트 위치를 양손 중앙에 위치시킴
+            trackedObject.transform.position = middlePosition;
+            */
             SubsystemManager.GetSubsystems(k_SubsystemsReuse);
             for (var i = 0; i < k_SubsystemsReuse.Count; ++i)
             {

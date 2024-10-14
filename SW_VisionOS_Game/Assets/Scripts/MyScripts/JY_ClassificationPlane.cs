@@ -34,6 +34,7 @@ public class JY_ClassificationPlane : MonoBehaviour
     void UpdatePlaneMaterial()
     {
         Material planeMaterial = defaultMaterial;
+        //int renderQueueValue = 3000; // 기본 렌더 큐 값
 
         switch (_ARPlane.classification)
         {
@@ -42,9 +43,11 @@ public class JY_ClassificationPlane : MonoBehaviour
                 break;
             case PlaneClassification.Wall:
                 planeMaterial = wallMaterial;
+                //renderQueueValue = 3001; // 벽은 바닥보다 나중에 렌더링
                 break;
             case PlaneClassification.Floor:
                 planeMaterial = floorMaterial;
+                //renderQueueValue = 2000; // 바닥은 먼저 렌더링
                 break;
             case PlaneClassification.Ceiling:
                 planeMaterial = ceilingMaterial;
@@ -62,10 +65,11 @@ public class JY_ClassificationPlane : MonoBehaviour
                 planeMaterial = windowMaterial;
                 break;
         }
-
+        
         if (planeMaterial != null)
         {
             _PlaneMeshRenderer.material = planeMaterial;
+            //_PlaneMeshRenderer.material.renderQueue = renderQueueValue; // 렌더 큐 값 설정
         }
     }
 }

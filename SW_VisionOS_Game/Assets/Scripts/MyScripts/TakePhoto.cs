@@ -35,7 +35,6 @@ public class TakePhoto : MonoBehaviour
                 Debug.Log("필름이 남아있음 ");
                 if (CameraText.Flim > 0) // 필름이 남아 있을 때만 스크린샷 촬영
                 {
-                    Debug.Log("찍었음");
                     ValueManager.Instance.ShutterCounter(1);
                     TakePhotoCameraView.CheckValidEnemiesVisibility();
                     StartCoroutine(CaptureScreenshot());
@@ -107,7 +106,7 @@ public class TakePhoto : MonoBehaviour
         Destroy(screenshot);
 
         isProcessing = false;
-        Debug.Log("isprocessing false");
+
         Debug.Log("귀신 사진이 몇? : " + visiblePhotoCount);
 
         if (CameraText.Flim == 0)

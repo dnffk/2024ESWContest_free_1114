@@ -8,51 +8,53 @@ using UnityEngine.UI;
 public class LightButtonManager : MonoBehaviour
 {
     public GameObject vignette;
+    public GameObject canvas;
 
-    /*(void Update()
-    {
-        int dd = ValueManager.Instance.Check_lightButton;
+    // 손전등 상태 저장 (켜짐: 1, 꺼짐: 0)
+    private int lightButtonState = 0;
 
-        if (dd == 1)
-        {
-            vignette.SetActive(true);
-        }
-        else if (dd == 0)
-        {
-            vignette.SetActive(false);
-        }
-    }
-    private int previousShutButtonValue = 0;
-
-    void Update()
-    {
-        if (ValueManager.Instance.Check_lightButton == 1 && previousShutButtonValue == 0)
-        {
-            vignette.SetActive(true);
-        }
-        else if(ValueManager.Instance.Check_lightButton == 0 && previousShutButtonValue == 1)
-        {
-            vignette.SetActive(false);
-        }
-        previousShutButtonValue = ValueManager.Instance.Check_lightButton;
-    }*/
+    // 이전 프레임의 버튼 입력 상태 저장
+    private int previousButtonInput = 0;
 
     void Start()
     {
-        Debug.Log("시작");
-        StartCoroutine(ToggleVignetteEffect());
+        // 초기 상태는 손전등이 꺼진 상태로 설정
+        UpdateLightState(lightButtonState);
     }
 
-    private IEnumerator ToggleVignetteEffect()
+    void Update()
     {
-            Debug.Log("비활성");
-            // 10초 동안 비활성화
-            vignette.SetActive(false);
-            yield return new WaitForSeconds(3f);
+        // 버튼 입력 값
+        int currentButtonInput = ValueManager.Instance.Check_lightButton;
 
-            // 10초 동안 활성화
+        // 버튼이 0에서 1로 바뀔 때만 토글
+        if (previousButtonInput == 0 && currentButtonInput == 1)
+        {
+            // 손전등 상태 토글 (0 -> 1 또는 1 -> 0)
+            lightButtonState = lightButtonState == 1 ? 0 : 1;
+
+            // 손전등 상태 업데이트
+            UpdateLightState(lightButtonState);
+        }
+
+        // 현재 버튼 입력을 이전 상태로 업데이트
+        previousButtonInput = currentButtonInput;
+    }
+
+    // 손전등 상태 업데이트 함수
+    private void UpdateLightState(int state)
+    {
+        if (state == 1)
+        {
+            Debug.Log("손전등 켜짐");
+            canvas.SetActive(false);
             vignette.SetActive(true);
-            Debug.Log("활성");
-            yield return new WaitForSeconds(3f);
+        }
+        else if (state == 0)
+        {
+            Debug.Log("손전등 꺼짐");
+            canvas.SetActive(true);
+            vignette.SetActive(false);
+        }
     }
 }

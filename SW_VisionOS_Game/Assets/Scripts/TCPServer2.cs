@@ -196,6 +196,7 @@ public class TCPServer2 : MonoBehaviour
         else
         {
             Debug.Log("셔터 입력 안들어;");
+            ValueManager.Instance.Set_Check_shutButton(0);
         }
         if (bLight == "1")
         {
@@ -204,12 +205,13 @@ public class TCPServer2 : MonoBehaviour
         }
         else
         {
+            /*
             count++;
             if (count == 2)
-            {
+            {*/
                 ValueManager.Instance.Set_Check_lightButton(0);
                 count = 0;
-            }
+            
             Debug.Log("손전등 입력 안 들어옴");
         }
     }
