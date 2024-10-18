@@ -31,7 +31,13 @@ public class TCPServer2 : MonoBehaviour
     public float lerpSpeed = 10f;
     int hitGhost = 0;
     int count = 0;
-
+    private int countAngle = 0;
+    private Quaternion quaternion;
+    private Quaternion initialRotation;
+    private Quaternion previousRotation;
+    private Quaternion currentRotation;
+    private Quaternion correctedQuaternion;
+    private Quaternion smoothQuaternion;
     Stopwatch sw = new Stopwatch();
     private void Awake()
     {
@@ -109,7 +115,6 @@ public class TCPServer2 : MonoBehaviour
                     Debug.Log("Handle 3");
                     Parsing(fields2[0]);
                     Debug.Log("Handle 4");
-
                     if (fields2.Length > 1)
                     {
                         for (int i = 1; i < fields2.Length - 1; i++)
@@ -128,7 +133,7 @@ public class TCPServer2 : MonoBehaviour
                     Send(client, data);
                     Debug.Log("call send hit Ghost");
                     hitGhost = 0;
-                    Send(client, "$0#\r" );
+                    Send(client, "$0#\r");
                 }
                 //byte[] ack = Encoding.ASCII.GetBytes("ACK");
                 //stream.Write(ack, 0, ack.Length);
@@ -176,14 +181,27 @@ public class TCPServer2 : MonoBehaviour
             RotateObject();
             messageReceived = false; // 플래그 초기화
         }
-        rotateObj.transform.rotation = Quaternion.Lerp(rotateObj.transform.rotation, quaternion, Time.deltaTime * lerpSpeed);
+        /*
+        Quaternion adjustedRotation = Quaternion.Inverse(initialRotation) * quaternion;
+        Vector3 currentRotation = adjustedRotation.eulerAngles;
+        currentRotation.x = -currentRotation.x;
+        adjustedRotation = Quaternion.Euler(currentRotation);
+        Debug.Log("조절된 카메라 회전값 : " + adjustedRotation);
+        rotateObj.transform.rotation = Quaternion.Lerp(rotateObj.transform.rotation, adjustedRotation, Time.deltaTime * lerpSpeed);
+        Debug.Log("현재 카메라 회전값" + rotateObj.transform.rotation);
+        if (countShut >= 20)
+        {
+            initialRotation = Quaternion.identity; // (0, 0, 0)으로 초기화
+            rotateObj.transform.rotation = initialRotation;
+            countShut = 0;
+        }
+        */
     }
     void UpdateOutputText()
     {
         // 수신된 메시지를 UI 텍스트로 업데이트
         //if (Quat_val != null && Light_val != null)
         //{
-
         Debug.Log("Light1 : " + L_pwr);
         ValueManager.Instance.Set_Lightness_Value(float.Parse(L_pwr));
         Debug.Log("Light2 : " + L_pwr);
@@ -192,6 +210,8 @@ public class TCPServer2 : MonoBehaviour
         {
             Debug.Log("셔터 입력 들어;");
             ValueManager.Instance.Set_Check_shutButton(1);
+            initialRotation = Camera.main.transform.rotation; // (0, 0, 0)으로 초기화
+            rotateObj.transform.rotation = initialRotation;
         }
         else
         {
@@ -200,6 +220,7 @@ public class TCPServer2 : MonoBehaviour
         }
         if (bLight == "1")
         {
+
             Debug.Log("손전등 입력 들어옴");
             ValueManager.Instance.Set_Check_lightButton(1);
         }
@@ -209,32 +230,65 @@ public class TCPServer2 : MonoBehaviour
             count++;
             if (count == 2)
             {*/
-                ValueManager.Instance.Set_Check_lightButton(0);
-                count = 0;
-            
+            ValueManager.Instance.Set_Check_lightButton(0);
+            count = 0;
             Debug.Log("손전등 입력 안 들어옴");
         }
     }
-    private Quaternion quaternion = Quaternion.identity;
     void RotateObject()
     {
         Debug.Log("각도변환 ");
-        // 쿼터니언을 오일러 각도로 변환
-        // Vector3 eulerAngles = quaternion.eulerAngles;
-        // 물체의 회전 설정
-        //rotateObj.transform.rotation = Quaternion.Euler(eulerAngles);
+        // 받은 쿼터니언 값을 검증하고 변환
         if (float.TryParse(x, out float xValue) &&
             float.TryParse(y, out float yValue) &&
             float.TryParse(z, out float zValue) &&
             float.TryParse(w, out float wValue))
         {
-            quaternion = new Quaternion(xValue, zValue, yValue, wValue);
-            //ValueManager.Instance.CheckCameraRotation(quaternion);
+            //quaternion = new Quaternion(wValue, xValue, zValue, yValue);
+            //quaternion = new Quaternion(xValue, zValue, yValue, wValue);
+            quaternion = new Quaternion(-xValue, zValue, yValue, wValue);
+            //quaternion = new Quaternion(xValue, -yValue, zValue, -wValue);
+            //quaternion = new Quaternion(xValue, -zValue, yValue, -wValue);
+            //quaternion = new Quaternion(-xValue, zValue, yValue, -wValue);
+            //quaternion = Quaternion.Inverse(quaternion);
+            //quaternion = new Quaternion(xValue, -zValue, -yValue, wValue);  
+            //quaternion = Quaternion.Inverse(quaternion);
         }
         else
         {
             Debug.LogError("Invalid float format in quaternion values");
+            return;
         }
+        // 초기 회전값을 (0, 0, 0)으로 설정
+        if (countAngle <= 0)
+        {
+
+            initialRotation = Quaternion.identity; // (0, 0, 0)으로 초기화
+            rotateObj.transform.rotation = initialRotation;
+            previousRotation = quaternion;
+            countAngle++; // 초기화 이후에는 더 이상 실행되지 않도록 카운트 증가
+        }
+
+        /*
+        Vector3 myEulerAngles = QimuLowerArm.eulerAngles; 
+        Quaternion invertedRotation = Quaternion.Euler(myEulerAngles.x, -myEulerAngles.y, myEulerAngles.z);                 
+        transform.localRotation = invertedRotation;
+        */
+
+        /*
+        currentRotation = quaternion;
+        Quaternion deltaRotation = currentRotation * Quaternion.Inverse(previousRotation);
+        rotateObj.transform.rotation = Quaternion.Slerp(rotateObj.transform.rotation, rotateObj.transform.rotation * deltaRotation, Time.deltaTime * 100f);
+        previousRotation = currentRotation;
+        Debug.Log("Euler: " + rotateObj.transform.rotation.eulerAngles);
+        Debug.Log("현재 카메라 회전값" + rotateObj.transform.rotation);
+        */
+        currentRotation = quaternion;
+        Quaternion deltaRotation = currentRotation * Quaternion.Inverse(previousRotation);
+        rotateObj.transform.rotation = Quaternion.Slerp(rotateObj.transform.rotation, rotateObj.transform.rotation * deltaRotation, Time.deltaTime * 100f);
+        previousRotation = currentRotation;
+        Debug.Log("Euler: " + rotateObj.transform.rotation.eulerAngles);
+        Debug.Log("현재 카메라 회전값" + rotateObj.transform.rotation);
     }
     void Parsing(string input)
     {
@@ -274,7 +328,6 @@ public class TCPServer2 : MonoBehaviour
             Debug.LogError("Not enough Fields" + fields.Length);
             return;
         }
-
         UpdateOutputText();
     }
     void OnApplicationQuit()

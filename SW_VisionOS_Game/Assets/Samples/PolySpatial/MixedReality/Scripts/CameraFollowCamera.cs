@@ -16,5 +16,9 @@ public class CameraFollowCamera : MonoBehaviour
             newPosition.y += yOffset; // Y축 오프셋 적용
             objectToMove.position = newPosition;
         }
+
+        Vector3 rotationEulerAngles = objectToMove.rotation.eulerAngles;
+        rotationEulerAngles.y = cameraTransform.rotation.eulerAngles.y; // Y축(좌우) 회전값 고정
+        objectToMove.rotation = Quaternion.Euler(rotationEulerAngles.x, 0, rotationEulerAngles.z);
     }
 }

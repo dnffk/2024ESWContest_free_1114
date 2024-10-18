@@ -32,6 +32,7 @@ public class UIMenuManager : MonoBehaviour
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        /*
         XROrigin xrOrigin = FindObjectOfType<XROrigin>();
         if (xrOrigin != null)
         {
@@ -64,6 +65,7 @@ public class UIMenuManager : MonoBehaviour
             menu2.transform.position += distanceMoved;
             isFinalScene = false;
         }
+        */
     }
     void OnDestroy()
     {

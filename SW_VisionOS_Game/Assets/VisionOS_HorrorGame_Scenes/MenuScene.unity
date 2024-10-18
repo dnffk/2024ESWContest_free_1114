@@ -1375,7 +1375,14 @@ MonoBehaviour:
   Lightness_Value: 0
   Check_shutButton: 0
   Check_lightButton: 0
-  Check_Lpwr: 0
+  playerTransform: {x: 0, y: 0, z: 0}
+  endingNum: 0
+  sceneName: 
+  currentSceneName: 
+  serverState: 0
+  shutterCounter: 0
+  completeShutterCounter: 0
+  cameraRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &1108741321
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
 public class XROriginManager : MonoBehaviour
 {
+    /*
     private XROrigin xrOrigin;
     private void OnEnable()
     {
@@ -34,4 +35,5 @@ public class XROriginManager : MonoBehaviour
         // Debug 로그 추가
         Debug.Log("XROrigin 초기화 완료: 위치와 회전 초기화");
     }
+    */
 }

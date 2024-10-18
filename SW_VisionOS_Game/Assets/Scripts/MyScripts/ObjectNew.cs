@@ -136,6 +136,13 @@ public class ObjectSpawner : MonoBehaviour
             return;
         }
 
+        // 평면이 바닥인지 확인
+        if (selectedPlane.classification != PlaneClassification.Floor)
+        {
+            Debug.Log("선택된 ARPlane은 바닥이 아닙니다.");
+            return; // 바닥이 아니면 생성하지 않음
+        }
+
         // 무작위 위치 선택
         Vector3 randomPosition = GetRandomPointOnPlane(selectedPlane);
 
