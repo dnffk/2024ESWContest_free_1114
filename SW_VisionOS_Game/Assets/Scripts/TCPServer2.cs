@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Diagnostics;
 using Debug = UnityEngine.Debug;
+using System.Collections;
 public class TCPServer2 : MonoBehaviour
 {
     private NetworkStream stream;
@@ -22,7 +23,7 @@ public class TCPServer2 : MonoBehaviour
     public TextMeshProUGUI Light_val;
     public Toggle Chk_shutB;
     public Toggle Chk_lightB;
-    public string ipAddress = "192.168.50.243";
+    public string ipAddress = "192.168.50.176";
     public int port = 8081;
     private bool isRunning;
     private bool messageReceived; // 메시지 수신 플래그
@@ -38,7 +39,10 @@ public class TCPServer2 : MonoBehaviour
     private Quaternion currentRotation;
     private Quaternion correctedQuaternion;
     private Quaternion smoothQuaternion;
+    private int countShut;
     Stopwatch sw = new Stopwatch();
+    private bool isHitGhostSending = false;
+
     private void Awake()
     {
         // 싱글톤 패턴 적용
@@ -62,6 +66,15 @@ public class TCPServer2 : MonoBehaviour
         serverThread.Start();
         Debug.Log("Server started on " + GetLocalIPAddress() + ":" + port);
     }
+    public void chkHitGhost(int value)
+    {
+        Debug.Log("hitghost 호출");
+        hitGhost = value;
+
+        // hitGhost가 설정되면 코루틴 실행
+
+        Debug.Log("hitghost 호출 후 값 할당됨");
+    }
     private void Run()
     {
         while (isRunning)
@@ -80,12 +93,6 @@ public class TCPServer2 : MonoBehaviour
             }
         }
     }
-    public void chkHitGhost(int value)
-    {
-        Debug.Log("hitghost 호출");
-        hitGhost = value;
-        Debug.Log("hitghost호출 후 값 할당됨");
-    }
     private void HandleClient(object obj)
     {
         TcpClient client = (TcpClient)obj;
@@ -103,7 +110,7 @@ public class TCPServer2 : MonoBehaviour
                 Debug.Log("Received: " + response); // 수신된 데이터를 디버그 로그로 출력
                                                     // 수신된 메시지와 플래그를 업데이트
                 Debug.Log("Handle 1");
-                if (response.Length < 3 || response[0] != '$' || response[response.Length - 2] != '#')
+                if (response.Length < 3 || response[0] != '$' || response[response.Length - 1] != '#')
                 {
                     Debug.LogError("Invalid format");
                     messageReceived = false;
@@ -128,13 +135,17 @@ public class TCPServer2 : MonoBehaviour
                 }
                 if (hitGhost != 0)
                 {
-                    string data = "$" + hitGhost + "#\r";
-                    Debug.Log("hit Ghost value  : " + hitGhost);
-                    Send(client, data);
-                    Debug.Log("call send hit Ghost");
-                    hitGhost = 0;
-                    Send(client, "$0#\r");
+                    StartCoroutine(SendHitGhost(client));
                 }
+                //if (hitGhost != 0)
+                //{
+                //    string data = "$" + hitGhost + "#\r";
+                //    Debug.Log("hit Ghost value  : " + hitGhost);
+                //    Send(client, data);
+                //    Debug.Log("call send hit Ghost");
+                //    hitGhost = 0;
+                //    Send(client, "$0#\r");
+                //} 
                 //byte[] ack = Encoding.ASCII.GetBytes("ACK");
                 //stream.Write(ack, 0, ack.Length);
                 //Debug.Log("ACK sent");
@@ -170,6 +181,30 @@ public class TCPServer2 : MonoBehaviour
             // 재연결이 실패하면 다시 재연결을 시도하거나 종료 처리
         }
     }
+
+
+
+    private IEnumerator SendHitGhost(TcpClient client)
+    {
+        // 1초 동안 hitGhost 값을 전송
+        float timer = 0f;
+        while (timer < 1f)
+        {
+            string data = "$" + hitGhost + "#\r";
+            Debug.Log("hit Ghost value  : " + hitGhost);
+            Send(client, data);
+            Debug.Log("call send hit Ghost : "+data);
+
+            timer += Time.deltaTime;
+            yield return null; // 다음 프레임까지 대기
+        }
+
+        // 1초 후 hitGhost를 0으로 설정하고 클라이언트로 전송
+        hitGhost = 0;
+        Send(client, "$0#\r");
+    }
+
+
     void Update()
     {
         //UpdateOutputText();
@@ -180,6 +215,13 @@ public class TCPServer2 : MonoBehaviour
         {
             RotateObject();
             messageReceived = false; // 플래그 초기화
+        }
+
+        if (countShut >= 20)
+        {
+            initialRotation = Camera.main.transform.rotation; // (0, 0, 0)으로 초기화
+            rotateObj.transform.rotation = initialRotation;
+            countShut = 0;
         }
         /*
         Quaternion adjustedRotation = Quaternion.Inverse(initialRotation) * quaternion;
@@ -210,8 +252,7 @@ public class TCPServer2 : MonoBehaviour
         {
             Debug.Log("셔터 입력 들어;");
             ValueManager.Instance.Set_Check_shutButton(1);
-            initialRotation = Camera.main.transform.rotation; // (0, 0, 0)으로 초기화
-            rotateObj.transform.rotation = initialRotation;
+            countShut++;
         }
         else
         {
@@ -328,6 +369,7 @@ public class TCPServer2 : MonoBehaviour
             Debug.LogError("Not enough Fields" + fields.Length);
             return;
         }
+        Debug.Log("텍스트 업데이/");
         UpdateOutputText();
     }
     void OnApplicationQuit()
@@ -365,6 +407,8 @@ public class TCPServer2 : MonoBehaviour
                 stream.Write(buffer, 0, buffer.Length);
                 Debug.Log("Data sent to client: " + data);
             }
+            else
+                Debug.Log("데이터 전송 실패 ");
         }
         catch (Exception e)
         {

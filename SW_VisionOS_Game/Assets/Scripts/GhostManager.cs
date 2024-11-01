@@ -75,13 +75,11 @@ public class GhostManager : MonoBehaviour
         switch (level)
         {
             case Level.Easy:
-                maxPoolCount = Random.Range(1, 3);
+                maxPoolCount = Random.Range(4, 7);
                 break;
-
             case Level.Medium:
                 maxPoolCount = Random.Range(4, 7);
                 break;
-
             case Level.Hard:
                 maxPoolCount = Random.Range(7, maxGhostCount);
                 break;
@@ -92,7 +90,7 @@ public class GhostManager : MonoBehaviour
     {
         for (int i = 0; i < maxPoolCount; i++)
         {
-            int randomPrefab = Random.Range(0, 4);
+            int randomPrefab = i % ghostPrefab.Count; // 순차적으로 프리팹 선택
             var obj = Instantiate(ghostPrefab[randomPrefab]);
             obj.SetActive(false);
             objectQueue.Enqueue(obj);
@@ -201,7 +199,7 @@ public class GhostManager : MonoBehaviour
 
             // 현재 필드에 고스트가 최대 갯수보다 적다면 생성
             yield return new WaitForSeconds(delayTime);
-            delayTime = Random.Range(0, 11);
+            delayTime = Random.Range(15, 20);
             PlaceGhost();
 
 

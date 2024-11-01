@@ -7,6 +7,7 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.VisionOS;
 using ARMeshClassification = UnityEngine.XR.VisionOS.ARMeshClassification;
 using UnityEngine.XR.ARSubsystems;
+
 public class MeshClassificationFracking : MonoBehaviour
 {
     const int k_NumClassifications = 8;

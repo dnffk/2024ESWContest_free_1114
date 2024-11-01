@@ -39,6 +39,7 @@ public class ValueManager : MonoBehaviour
     public int shutterCounter;
     public int completeShutterCounter;
     public Quaternion cameraRotation;
+    public int photoCount;
 
     private string filePath;
 
@@ -63,15 +64,16 @@ public class ValueManager : MonoBehaviour
     }
     public void Set_Lightness_Value(float value)
     {
-        Lightness_Value = value;
-        if(value < 1000)
-        {
-            Lightness_Value = 0.5f;
-        }
-        else if(value < 2000)
-        {
-            Lightness_Value = 0.7f;
-        }
+        Lightness_Value = 1 - (value - 500) / 3000;
+        
+        //if(value < 1000)
+        //{
+        //    Lightness_Value = 0.5f;
+        //}
+        //else if(value < 2000)
+        //{
+        //    Lightness_Value = 0.7f;
+        //}
         Debug.Log("Lightness : " + Lightness_Value);
         SaveDebugDataToJson();
     }
@@ -129,6 +131,16 @@ public class ValueManager : MonoBehaviour
     {
         this.cameraRotation = value;
         SaveDebugDataToJson();
+    }
+
+    public void VisiblePhotoCounter(int value)
+    {
+        if (value >= 3)
+        {
+            this.photoCount = 3;
+        }
+        this.photoCount = value;
+
     }
 
     private void SaveDebugDataToJson()

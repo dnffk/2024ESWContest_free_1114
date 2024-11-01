@@ -97,7 +97,7 @@ public class NavGhost : MonoBehaviour
         switch (level)
         {
             case GhostManager.Level.Easy:
-                moveSpeed = 0.4f;
+                moveSpeed = 0.2f;
                 break;
             case GhostManager.Level.Medium:
                 moveSpeed = 0.7f;
@@ -270,7 +270,7 @@ public class NavGhost : MonoBehaviour
             {
                 if (teleportCount < 3)
                 {
-                    TeleportToRandomPointOnPlane();
+                    //TeleportToRandomPointOnPlane();
                     teleportCount++;
                 }
                 else
@@ -308,6 +308,7 @@ public class NavGhost : MonoBehaviour
         hasTeleported = true;
         PlaySound();
     }
+    
     public void TeleportToRandomPointOnPlane()
     {
         if (planes.Count == 0) return;

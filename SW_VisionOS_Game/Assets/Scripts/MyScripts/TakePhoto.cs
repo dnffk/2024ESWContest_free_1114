@@ -82,6 +82,8 @@ public class TakePhoto : MonoBehaviour
             ValueManager.Instance.CompletedShutterCounter(1);
             folderPath = Path.Combine(Application.persistentDataPath, "Capture");
             visiblePhotoCount++;
+            CameraText.visiblePhotoCount++;
+            ValueManager.Instance.VisiblePhotoCounter(visiblePhotoCount);
         }
         else
         {
